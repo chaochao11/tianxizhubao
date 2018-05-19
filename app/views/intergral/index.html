@@ -1,0 +1,29 @@
+<ion-content class="main-content intergral-container">
+    <div class="ucenter-header-bar">
+        <div class="basic-info">
+            <img ng-src="{{userInfoObj.avatar}}" class="avatar-img">
+            <p class="user-name">{{userInfoObj.nickName}}</p>
+            <div class="intergarl-desc">
+                现有积分：{{totalIntegral}}
+            </div>
+        </div>
+    </div>
+    <div class="list">
+        <a class="item item-icon-right intergral-rules" ui-sref="index.order">
+            <i class="icon ion-ios-arrow-forward"></i>
+            积分规则
+        </a>
+        <div class="item item-icon-right">
+            积分明细
+        </div>
+        <div class="item intergral-item" ng-repeat="item in inteGralList">
+            <div class="item-left">
+                <span>{{item.changeComment}}</span>
+                <p class="time">{{item.changeTime}}</p></div>
+            <div class="intergral-num">
+                {{item.status===1?'+':'-'}}{{item.point}}
+            </div>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+    </div>
+</ion-content>

@@ -1,0 +1,95 @@
+<ion-view>
+    <product-sub-nav></product-sub-nav>
+    <ion-content class="main-content">
+        <ion-slide-box class="product-img-slide">
+            <ion-slide class="slide-item" ng-repeat="(key,value) in productImagesSlideList track by $index">
+                <img ng-src="{{value}}" class="img">
+            </ion-slide>
+        </ion-slide-box>
+        <div class="list product-desc-container">
+            <div class="item">
+                <p class="product-name">{{productObj.name}}</p>
+                <div class="product-price">
+                    <span class="price">¥{{productObj.defaultPrice}}</span>
+                    <span class="intergral">购买可获得{{productObj.points}}积分</span>
+                </div>
+            </div>
+            <div class="item sales-activity">
+                <span class="title">活动</span>
+                <i class="icon-sales-activity"></i>
+                <p>一次性购物满1000元，立减50元</p>
+            </div>
+            <a class="item select-product-size item-icon-right" ng-click="showSchedulePanel()">
+                请选择尺寸颜色分类
+                <i class="icon ion-ios-arrow-forward"></i>
+                <span class="item-note">{{selectedPropertyText}}</span>
+            </a>
+
+        </div>
+
+    </ion-content>
+    <ion-footer-bar class="bar-footer bottom-operate-bar">
+        <a class="button-full btn-cart" ui-sref="index.cart">
+            <i class="icon-cart">
+                <i class="product-num" ng-if="cartQuantity!==0">{{cartQuantity}}</i>
+            </i>
+            <p>购物车</p>
+        </a>
+        <button class="btn-normal-full btn-add-cart" ng-click="addToCart()">加入购物车</button>
+        <button class="btn-normal-full" ng-click="buyImmediately()">立即购买</button>
+    </ion-footer-bar>
+    <div class="product-property-select-container" ng-class="isPanelShow">
+        <a ng-click="hidePanel()" class="icon-close"></a>
+        <div class="property-img">
+            <img ng-src="{{pic}}" class="img">
+        </div>
+        <ion-scroll class="property-container">
+            <div ui-sku split-str="," on-ok="callback(stock,price,pic,skuid)">
+                <div class="item">
+                    <p class="property-name">珍珠颜色</p>
+                    <nav class="property-list">
+                        <button ng-class="{'selected': keyMap[value].selected, 'disabled': keyMap[value].disabled}"
+                                class="property-item btn-normal" ng-repeat="(key,value) in colorList track by $index"
+                                ng-click="onSelect(value)">
+                            {{value}}
+                        </button>
+                    </nav>
+                </div>
+                <div class="item">
+                    <p class="property-name">配件材质</p>
+                    <nav class="property-list">
+                        <button ng-class="{'selected': keyMap[value].selected, 'disabled': keyMap[value].disabled}"
+                                class="property-item btn-normal" ng-repeat="(key,value) in materialList track by $index"
+                                ng-click="onSelect(value)">
+                            {{value}}
+                        </button>
+                    </nav>
+                </div>
+                <div class="item">
+                    <p class="property-name">戒指尺寸</p>
+                    <nav class="property-list">
+                        <button ng-class="{'selected': keyMap[value].selected, 'disabled': keyMap[value].disabled}"
+                                class="property-item btn-normal" ng-repeat="(key,value) in sizeList track by $index"
+                                ng-click="onSelect(value)">
+                            {{value}}
+                        </button>
+                    </nav>
+                </div>
+            </div>
+            <div class="item buy-num">
+                <span class="title">购买数量</span>
+                <div class="num-operate">
+                    <button ng-click="reduce()" class="button btn-reduce"
+                            ng-disabled="quantity===1||isMin"></button>
+                    <input type="text" ng-model="quantity" ng-change="changeNum(quantity)" disabled>
+                    <button ng-click="add()" class="button btn-plus"
+                            ng-disabled="quantity===stock||isMax"></button>
+                </div>
+            </div>
+        </ion-scroll>
+        <div class="bar-footer bottom-operate-bar">
+            <button class="button btn-normal-full" ng-disabled="isValid" ng-click="getSelectedProperty()">确定</button>
+        </div>
+    </div>
+    <div class="overlay" ng-show="isPanelShow==='show'" ng-click="hidePanel()"></div>
+</ion-view>

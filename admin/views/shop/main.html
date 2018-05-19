@@ -1,0 +1,39 @@
+<div class="data-info-wrapper">
+  <div class="card-container">
+    <div class="card-item flex">
+      <div class="card-data-content layout-row">
+        <div class="item flex-20 spacer">
+          <p class="shop data-num">{{dataBasicObj.pv}}</p>
+          <p class="data-description">昨日浏览量</p>
+        </div>
+        <div class="item flex-20 spacer">
+          <p class="shop data-num">{{dataBasicObj.uv}}</p>
+          <p class="data-description">昨日访客数</p>
+        </div>
+        <div class="item flex-20 spacer">
+          <a class="shop data-num">{{dataBasicObj.productPv}}</a>
+          <p class="data-description">昨日商品浏览量</p>
+        </div>
+        <div class="item flex-20 spacer">
+          <p class="shop data-num">{{dataBasicObj.produtUv}}</p>
+          <p class="data-description">昨日商品访客数</p>
+        </div>
+        <div class="item flex-20 spacer">
+          <a class="data-num" ui-sref="index.goods.sales-list({pageNo:1,pageSize:10,type:1})">{{dataBasicObj.produtCount}}</a>
+          <p class="data-description">商品总数</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container mt-15">
+    <div class="card-item flex">
+      <div class="card-data-header">
+        <h4>7天流量趋势</h4>
+      </div>
+      <div class="card-data-content layout-column flex">
+        <flux-chart id="fluxDataContainer"></flux-chart>
+      </div>
+    </div>
+  </div>
+</div>

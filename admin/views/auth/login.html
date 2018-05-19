@@ -1,0 +1,36 @@
+<div class="login-wrapper">
+    <div class="login-container layout-row md-whiteframe-2dp">
+        <div class="left">
+            <div class="banner"></div>
+            <div class="intro">
+                <h3>欢迎登陆天禧珠宝后台</h3>
+                <p>-更轻松地管理店铺与商品</p>
+                <p>-更高效地添加活动</p>
+                <p>-更快速地处理订单、查看销量</p>
+            </div>
+        </div>
+        <div class="right">
+            <div class="login-logo">
+                <i></i>
+                <span>天禧珠宝</span>
+            </div>
+            <form name="loginForm" novalidate>
+            <div class="layout-column">
+
+                   <md-input-container>
+                       <label>用户名</label>
+                       <input type="text" name="name" ng-model="loginObj.name" required>
+                   </md-input-container>
+                   <md-input-container>
+                       <label>密码</label>
+                       <input type="password" name="password" ng-model="loginObj.password" required>
+                   </md-input-container>
+
+            </div>
+            <md-input-container>
+                <md-button class="md-raised md-primary flex" ng-disabled="loginForm.$invalid" ng-click="loginVerify(loginObj,$event)" id="btnLogin">登录</md-button>
+            </md-input-container>
+        </form>
+        </div>
+    </div>
+</div>

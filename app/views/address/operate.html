@@ -1,0 +1,29 @@
+<ion-view>
+    <form name="operateAddressForm" novalidate>
+    <ion-content class="main-content">
+            <div class="list operate-address">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">收货人</span>
+                    <input type="text" name="userName" ng-model="addressObj.name" placeholder="请输入收货人姓名" required>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">手机号码</span>
+                    <input type="text" name="phone" ng-model="addressObj.phone" placeholder="请输入收货人手机号码" required>
+                </label>
+                <div class="item item-icon-right" select-city>
+                    所在区域
+                    <span class="item-note" id="picker">{{city}}</span>
+                    <i class="icon ion-ios-arrow-forward"></i>
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">详细地址</span>
+                    <textarea name="address" cols="20" rows="5" ng-model="addressObj.addressInfo" placeholder="请输入收货详细地址" required></textarea>
+                </label>
+                <ion-toggle ng-model="addressObj.status" toggle-class="toggle-calm">设为默认</ion-toggle>
+            </div>
+    </ion-content>
+    <ion-footer-bar class="bottom-address-operate-bar">
+        <button class="button btn-normal-full" ng-disabled="operateAddressForm.$invalid||hasArea" ng-click="saveAddress(addressObj)">保存</button>
+    </ion-footer-bar>
+    </form>
+</ion-view>

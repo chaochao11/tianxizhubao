@@ -1,0 +1,31 @@
+<ion-view>
+    <form name="saveCommentForm" novalidate>
+        <ion-content class="main-content">
+            <ul class="order-product-list order-comment-list">
+                <li class="order-product-item" ng-repeat="item in productList">
+                    <div class="product-item item-bar-container">
+                        <div class="product-img">
+                            <img ng-src="{{item.picture}}" class="img">
+                        </div>
+                        <div class="product-info">
+                            <p class="category-name">{{item.uses}}</p>
+                            <p class="product-name">{{item.name}}</p>
+                            <p class="product-argument">类型：{{item.skuattrs}}</p>
+                        </div>
+                    </div>
+                    <div class="rating-level item-bar-container">
+                        <div rating-level rating-value="item.ratingVal" max="max" on-hover="onHover" on-leave="onLeave"
+                             readonly="{{readonly}}"></div>
+                        <p class="rating-tips">请滑动星星评分</p>
+                    </div>
+                    <label class="comment-content">
+                        <textarea rows="10" placeholder="请写下对该商品的评价" ng-model="item.content" name="content"></textarea>
+                    </label>
+                </li>
+            </ul>
+        </ion-content>
+        <ion-footer-bar class="bottom-comment-operate-bar">
+            <button class="btn-normal-full" ng-click="saveComment()">提交评价</button>
+        </ion-footer-bar>
+    </form>
+</ion-view>

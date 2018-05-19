@@ -1,0 +1,233 @@
+<div class="sub-page-content flex">
+    <div class="card layout-row md-whiteframe-1dp operate-form">
+        <div class="layout-row flex">
+            <form name="operateGoodsForm" novalidate class="flex">
+                <md-tabs md-dynamic-height>
+                    <md-tab label="基本信息">
+                        <md-content class="md-padding">
+                            <div class="layout-row flex">
+                                <md-input-container class="md-block flex-33">
+                                    <label>商品名称</label>
+                                    <input type="text" name="name" ng-model="goodsObj.name" minlength="2" maxlength="60"
+                                           required placeholder="请输入商品名称">
+                                    <div ng-messages="operateGoodsForm.name.$error">
+                                        <div ng-message="required">商品名称不能为空</div>
+                                        <div ng-message="minlength,maxlength">商品名称允许2-60个字符</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>购物可获得积分</label>
+                                    <input type="text" name="points" ng-model="goodsObj.points" placeholder="若不获得积分请留空"
+                                           pattern="^\+?(?!0)\d*$">
+                                    <div ng-messages="operateGoodsForm.points.$error">
+                                        <div ng-message="pattern">请输入正确的积分</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>是否上线</label>
+                                    <md-select ng-model="goodsObj.islive">
+                                        <md-option selected ng-value="1">是</md-option>
+                                        <md-option ng-value="0">否</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row flex">
+                                <md-input-container class="md-block flex-33">
+                                    <label>珍珠品种分类</label>
+                                    <md-select ng-model="goodsObj.style" name="style" required>
+                                        <md-option ng-value="item.pearlId" ng-repeat="item in typeList">
+                                            {{item.pearlName}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="operateGoodsForm.style.$error">
+                                        <div ng-message="required">商品分类必须选择</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>商品用途分类</label>
+                                    <md-select ng-model="goodsObj.uses" name="uses" required=>
+                                        <md-option ng-value="item.useId" ng-repeat="item in usesList">{{item.useName}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="operateGoodsForm.uses.$error">
+                                        <div ng-message="required">商品用途必须选择</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>推荐到首页</label>
+                                    <md-select ng-model="goodsObj.isup">
+                                        <md-option selected ng-value="0">否</md-option>
+                                        <md-option ng-value="1">是</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="custom-input-container">
+                                <label>上传列表图</label>
+                                <multi-upload-images filesize="2" uploadpath="product" ng-model="goodsObj.uploadedImageList"></multi-upload-images>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="SKU">
+                        <md-content class="md-padding">
+                            <div class="custom-input-container" ng-repeat="item in attrList">
+                                <label class="title">{{item.name}}</label>
+                                <div class="item{{$index}}">
+                                    <md-checkbox ng-repeat="subItem in item.itemAttributes" class="chk"
+                                                 aria-label="{{subItem.value}}"
+                                                 ng-value="{{subItem.id}}"
+                                                 ng-checked="subItem.checked"
+                                                 ng-click="toggle(this)">
+                                        {{subItem.value}}
+                                    </md-checkbox>
+                                </div>
+                            </div>
+                            <div class="custom-input-container" ng-if="skuTempTable.length!==0">
+                                <label>SKU列表</label>
+                                <div class="full-page-table sku-table">
+                                    <div class="table-header layout-row flex">
+
+                                        <div class="header-item flex-10">
+                                            颜色
+                                        </div>
+                                        <div class="header-item flex-10">
+                                            材质
+                                        </div>
+                                        <div class="header-item flex-10">
+                                            大小
+                                        </div>
+                                        <div class="header-item flex-10">
+                                            价格
+                                        </div>
+                                        <div class="header-item flex-10">
+                                            库存
+                                        </div>
+                                        <div class="header-item flex">操作</div>
+                                    </div>
+                                </div>
+                                <div class="table-item-row layout-row flex" ng-repeat="item in skuTempTable">
+                                    <div class="table-item flex-10 layout-row">
+                                        {{item.color}}
+                                    </div>
+                                    <div class="table-item flex-10 layout-row">
+                                        {{item.material}}
+                                    </div>
+                                    <div class="table-item flex-10 layout-row">
+                                        {{item.size}}
+                                    </div>
+                                    <div class="table-item flex-10 layout-row">
+                                        <input type="text" class="sku-table-input" name="price" ng-model="item.price" required pattern="^\+?(?!0)\d*$">
+                                        <div ng-messages="operateGoodsForm.price.$error">
+                                            <div ng-message="pattern">请输入正确的折扣</div>
+                                        </div>
+                                    </div>
+                                    <div class="table-item flex-10 layout-row">
+                                        <input type="text" class="sku-table-input" name="stock" ng-model="item.stock" required pattern="^\+?(?!0)\d*$">
+                                    </div>
+                                    <div class="table-item flex">
+                                        <a href="javascript:;" class="upload-sku-img" upload-sku-img>
+                                            <input type="file" data-index="{{$index}}">
+                                        </a>
+                                        <img class="sku-img" ng-src="../{{item.picture}}" style='width: 25px;height:25px;vertical-align: middle'>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="包装清单">
+                        <md-content class="md-padding">
+                            <div id="packageEditor" ng-model="goodsObj.packinglist" name="packinglist"
+                                 package-editor="true"
+                                 style="height:500px;" required></div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="售后/参数">
+                        <md-content class="md-padding">
+                            <div class="layout-row flex">
+                                <md-input-container class="md-block flex-25">
+                                    <label>商品毛重</label>
+                                    <input type="text" name="weight" ng-model="goodsObj.weight"
+                                           required placeholder="请输入商品毛重" pattern="^\+?(?!0)\d*$">
+                                    <div ng-messages="operateGoodsForm.weight.$error">
+                                        <div ng-message="required">商品毛重不能为空</div>
+                                        <div ng-message="pattern">请输入有效的商品毛重数量</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-25">
+                                    <label>圈口</label>
+                                    <input type="text" name="wathframe" ng-model="goodsObj.wathframe"
+                                           required placeholder="请输入商品圈口" pattern="^\+?(?!0)\d*$">
+                                    <div ng-messages="operateGoodsForm.wathframe.$error">
+                                        <div ng-message="required">圈口不能为空</div>
+                                        <div ng-message="pattern">请输入有效的圈口数字</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-25">
+                                    <label>镶嵌方式</label>
+                                    <input type="text" name="mosaicway" ng-model="goodsObj.mosaicway"
+                                           required placeholder="请输入商品圈口">
+                                    <div ng-messages="operateGoodsForm.mosaicway.$error">
+                                        <div ng-message="required">镶嵌方式不能为空</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-25">
+                                    <label>戒圈材质</label>
+                                    <input type="text" name="material" ng-model="goodsObj.material"
+                                           required placeholder="请输入戒圈材质">
+                                    <div ng-messages="operateGoodsForm.material.$error">
+                                        <div ng-message="required">戒圈材质不能为空</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row flex">
+                                <md-input-container class="md-block flex-25">
+                                    <label>珍珠直径</label>
+                                    <input type="text" name="diameter" ng-model="goodsObj.diameter"
+                                           required placeholder="请输入珍珠直径">
+                                    <div ng-messages="operateGoodsForm.diameter.$error">
+                                        <div ng-message="required">珍珠直径不能为空</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-25">
+                                    <label>款式</label>
+                                    <input type="text" name="type" ng-model="goodsObj.type"
+                                           required placeholder="请输入珍珠款式">
+                                    <div ng-messages="operateGoodsForm.type.$error">
+                                        <div ng-message="required">款式不能为空</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-25">
+                                    <label>证书</label>
+                                    <input type="text" name="certificate" ng-model="goodsObj.certificate"
+                                           required placeholder="请输入证书名称">
+                                    <div ng-messages="operateGoodsForm.mosaicway.$error">
+                                        <div ng-message="required">证书不能为空</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="custom-input-container">
+                                <label>售后内容</label>
+                                <div id="afterSalesEditor" ng-model="goodsObj.custservice" name="custservice"
+                                     after-sales-editor="true"
+                                     style="height:500px;" required></div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="图文详情">
+                        <md-content class="md-padding">
+                            <div id="editor" ng-model="goodsObj.content" name="content" content-editor="true"
+                                 style="height:500px;" required></div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+                <div class="layout-row">
+                    <md-input-container>
+                        <md-button class="md-raised md-primary"
+                                   ng-disabled="operateGoodsForm.$invalid||goodsObj.pictures===''"
+                                   ng-click="saveGoods($event)">立即保存
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

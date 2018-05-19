@@ -1,0 +1,140 @@
+<div class="data-info-wrapper">
+    <div class="card-container">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row">
+                <h4 class="flex-20">交易概况</h4>
+                <div class="flex layout-row operate">
+                    <md-select ng-model="tradeDataType" ng-change="tradeDataSelectChange(tradeDataType)">
+                        <md-option ng-value="0" selected>最近一日</md-option>
+                        <md-option ng-value="1">最近7日</md-option>
+                        <md-option ng-value="2">最近30日</md-option>
+                        <md-option ng-value="3">按日检索</md-option>
+                    </md-select>
+                    <md-datepicker ng-model="tradeDate"
+                                   md-max-date="currentDate"
+                                   name="startTime" md-open-on-focus md-is-open="true" ng-change="tradeDateChange(tradeDate)"
+                                   ng-if="tradeDataType===3">
+                                </md-datepicker>
+                    <md-button class="md-icon-button" ng-click="exportToExcel(selected,$event)">
+                        <md-tooltip>
+                            导出所选到Excel
+                        </md-tooltip>
+                        <md-icon md-svg-icon="exportExcel"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div class="card-data-content layout-row">
+                <div class="trade-left flex">
+                    <div class="trade-column visitor">
+                        <div class="trade-item">
+                            <p class="name">
+                                <span>访客数</span>
+                                <span class="compare-value" ng-class="{'up':tradeObj.uvChange>0,'down':tradeObj.uvChange<0}">{{tradeObj.uvChange===0?'-':tradeObj.uvChange+'%'}}%
+                                    <i class="icon" ng-class="{'icon-arrow-up':tradeObj.uvChange>0,'icon-arrow-down':tradeObj.uvChange<0}"></i>
+                                </span>
+                            </p>
+                            <p class="value">{{tradeObj.uv}}</p>
+                        </div>
+                    </div>
+                    <div class="trade-column buyer layout-row">
+                        <div class="trade-item flex-33">
+                            <p class="name">
+                                <span>下单买家数</span>
+                                <span class="compare-value" ng-class="{'up':tradeObj.createOrderPersonChange>0,'down':tradeObj.createOrderPersonChange<0}">{{tradeObj.createOrderPersonChange===0?'-':tradeObj.createOrderPersonChange+'%'}}
+                                    <i class="icon" ng-class="{'icon-arrow-up':tradeObj.createOrderPersonChange>0,'icon-arrow-down':tradeObj.createOrderPersonChange<0}"></i>
+                                </span>
+                            </p>
+                            <p class="value">{{tradeObj.createOrderPerson}}</p>
+                        </div>
+                        <div class="trade-item flex-33">
+                            <p class="name">
+                                <span>下单金额</span>
+                                <span class="compare-value" ng-class="{'up':tradeObj.OrderTradeChange>0,'down':tradeObj.OrderTradeChange<0}">{{tradeObj.OrderTradeChange===0?'-':tradeObj.OrderTradeChange+'%'}}
+                                    <i class="icon" ng-class="{'icon-arrow-up':tradeObj.OrderTradeChange>0,'icon-arrow-down':tradeObj.OrderTradeChange<0}"></i>
+                                </span>
+                            </p>
+                            <p class="value">¥{{tradeObj.OrderTrade|number:2}}</p>
+                        </div>
+                    </div>
+                    <div class="trade-column payer layout-row">
+                        <div class="trade-item flex-33">
+                            <p class="name">
+                                <span>支付买家数</span>
+                                <span class="compare-value" ng-class="{'up':tradeObj.PayPersonChange>0,'down':tradeObj.PayPersonChange<0}">{{tradeObj.PayPersonChange===0?'-':tradeObj.PayPersonChange+'%'}}
+                                    <i class="icon" ng-class="{'icon-arrow-up':tradeObj.PayPersonChange>0,'icon-arrow-down':tradeObj.PayPersonChange<0}"></i>
+                                </span>
+                            </p>
+                            <p class="value">{{tradeObj.PayPerson}}</p>
+                        </div>
+                        <div class="trade-item flex-33">
+                            <p class="name">
+                                <span>支付金额</span>
+                                <span class="compare-value" ng-class="{'up':tradeObj.PayTradeChange>0,'down':tradeObj.PayTradeChange<0}">{{tradeObj.PayTradeChange===0?'-':tradeObj.PayTradeChange+'%'}}
+                                    <i class="icon" ng-class="{'icon-arrow-up':tradeObj.PayTradeChange>0,'icon-arrow-down':tradeObj.PayTradeChange<0}"></i>
+                                </span>
+                            </p>
+                            <p class="value">¥{{tradeObj.PayTrade|number:2}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="trade-right flex-30">
+                    <div class="trade-bg">
+                        <!--<div class="trade-desc">-->
+                            <!--<p>访客</p>-->
+                            <!--<p>下单</p>-->
+                            <!--<p>支付</p>-->
+                        <!--</div>-->
+                        <div class="trade-order-rate">
+                            <p class="name">下单转化率</p>
+                            <p class="value">{{tradeObj.OrderConversion|number:2}}%</p>
+                        </div>
+                        <div class="trading-order-to-pay-rate">
+                            <p class="name">下单-支付转化率</p>
+                            <p class="value">{{tradeObj.PayConversion|number:2}}%</p>
+                        </div>
+                        <div class="trading-pay-rate">
+                            <p class="name">支付转化率</p>
+                            <p class="value">{{tradeObj.AllConversion|number:2}}%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-container mt-15">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row">
+                <h4 class="flex-20">交易概况</h4>
+                <div class="flex layout-row operate">
+                    <md-select ng-model="tradeOrderType" ng-change="tradeOrderChange(tradeOrderType)">
+                        <md-option ng-value="0" selected>最近7日</md-option>
+                        <md-option ng-value="1">最近30日</md-option>
+                        <md-option ng-value="2">按月检索</md-option>
+                        <md-option ng-value="3">按年检索</md-option>
+                    </md-select>
+                    <md-select ng-model="tradeOrderMonth" ng-change="tradeOrderMonthChange(tradeOrderMonth)" ng-if="tradeOrderType===2">
+                        <md-option ng-value="0" selected>请选择月份</md-option>
+                        <md-option ng-repeat="item in tradeOrderMonthList" ng-value="item">
+                            {{item}}
+                        </md-option>
+                    </md-select>
+                    <md-select ng-model="tradeOrderYear" ng-change="tradeOrderYearChange(tradeOrderYear)" ng-if="tradeOrderType===3">
+                        <md-option ng-value="0" selected>请选择年份</md-option>
+                        <md-option ng-repeat="item in yearList" ng-value="item">
+                            {{item}}年
+                        </md-option>
+                    </md-select>
+                    <md-button class="md-icon-button" ng-click="exportToExcel(selected,$event)">
+                        <md-tooltip>
+                            导出所选到Excel
+                        </md-tooltip>
+                        <md-icon md-svg-icon="exportExcel"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div class="card-data-content layout-column">
+                <trade-data-chart id="tradeAllDataContainer"></trade-data-chart>
+            </div>
+        </div>
+    </div>
+</div>

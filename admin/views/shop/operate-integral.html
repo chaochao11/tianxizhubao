@@ -1,0 +1,83 @@
+<div class="sub-page-content flex">
+    <div class="card layout-row md-whiteframe-1dp operate-form">
+        <div class="layout-row flex">
+            <form name="operateIntegralForm" novalidate class="flex">
+
+                <div class="layout-row flex">
+                    <md-input-container class="md-block flex">
+                        <label>积分规则名称</label>
+                        <input type="text" name="name" ng-model="integralObj.name" minlength="2"
+                               maxlength="10"
+                               required placeholder="请输入2-10个字符的积分规则名称">
+                        <div ng-messages="operateIntegralForm.name.$error">
+                            <div ng-message="required">积分规则名称不能为空</div>
+                            <div ng-message="minlength,maxlength">积分规则名称长度仅允许在2-10个字符</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block flex">
+                        <label>奖励积分</label>
+                        <input type="text" name="integral" ng-model="integralObj.integral" placeholder="请输入奖励的积分数" required pattern="^\+?(?!0)\d*$">
+                        <div ng-messages="operateIntegralForm.integral.$error">
+                            <div ng-message="required">奖励的积分数</div>
+                            <div ng-message="pattern">请输入大于0的积分数</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div class="layout-row flex">
+                    <md-input-container class="md-block flex-50">
+                        <label>奖励条件</label>
+                        <md-select ng-model="integralObj.type" name="type" required ng-change="integralTypeChange(integralObj.type)">
+                            <md-option ng-value="1">按每成功交易笔数</md-option>
+                            <md-option ng-value="2">按每购买金额</md-option>
+                        </md-select>
+                        <div ng-messages="operateIntegralForm.type.$error">
+                            <div ng-message="required">请选择奖励条件</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block flex-50">
+                        <label>启用/禁用</label>
+                        <md-select ng-model="integralObj.status" name="status">
+                            <md-option ng-value="1" selected>启用</md-option>
+                            <md-option ng-value="0">禁用</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                
+                <div class="layout-row" ng-if="integralObj.type===1">
+                    <md-input-container class="md-block flex-50">
+                        <label>每成功交易</label>
+                        <input type="text" placeholder="成交笔数" pattern="^\+?(?!0)\d*$" name="orderNum" ng-model="integralObj.orderNum" required>
+                        <span style="position: absolute;right:2px;">笔</span>
+                        <div ng-messages="operateIntegralForm.orderNum.$error">
+                            <div ng-message="required">请输入成功交易笔数</div>
+                            <div ng-message="pattern">请输入大于0的整数</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div class="layout-row" ng-if="integralObj.type===2">
+                    <md-input-container class="md-block flex-50">
+                        <label>每购买金额</label>
+                        <input type="text" ng-model="integralObj.payLine" placeholder="购买金额" required name="payLine" pattern="^\+?(?!0)\d*$">
+                        <span style="position: absolute;right:2px;">元</span>
+                        <div ng-messages="operateIntegralForm.payLine.$error">
+                            <div ng-message="required">请输入购买金额</div>
+                            <div ng-message="pattern">请输入大于0的金额</div>
+                        </div>
+                    </md-input-container>
+
+                </div>
+
+                <div class="layout-row">
+                    <md-input-container>
+                        <md-button class="md-raised md-primary"
+                                   ng-disabled="operateIntegralForm.$invalid"
+                                   ng-click="saveIntegral(integralObj,$event)">立即保存
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

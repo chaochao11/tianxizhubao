@@ -1,0 +1,29 @@
+<ion-view>
+    <product-sub-nav></product-sub-nav>
+    <ion-content class="main-content">
+        <div class="list">
+            <div class="item item-divider">
+                包装清单
+            </div>
+            <div class="item-bar-container">
+                {{productObj.packinglist}}
+            </div>
+            <div class="item item-divider">
+                规格参数
+            </div>
+            <div class="item-bar-container">
+                <p>商品毛重：{{productObj.weight}}</p>
+                <p>镶嵌方式：{{productObj.mosaicway}}</p>
+                <p>戒圈材质：{{productObj.material}}</p>
+                <p>珍珠直径：{{productObj.diameter}}</p>
+                <p>款式：{{productObj.type}}</p>
+            </div>
+            <div class="item item-divider">
+                售后服务
+            </div>
+            <div class="item-bar-container">
+                {{productObj.custservice}}
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

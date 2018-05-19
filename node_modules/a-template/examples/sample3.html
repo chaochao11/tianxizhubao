@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>list sample</title>
+</head>
+<body>
+	<script src="../build/a-template.js"></script>
+	<script id="load_sample" type="text/template" src="./sample3.js"></script>
+	<script id="another_sample" type="text/template" src="./sample4.js"></script>
+	<script>
+	var list = new aTemplate({
+		templates:["load_sample","another_sample"],
+		data:{
+			"sample":"hoge",
+			"number":1
+		},
+		convert:{
+			add:function(txt,a){
+				txt = parseInt(txt);
+				for(var i = 0,n = a.length; i < n; i++){
+					txt += parseInt(a[i]);
+				}
+				return txt;
+			}
+		}
+	});
+	//this code won't work in a local environment.
+	list.loadHtml().then(function(){
+		list.update();
+	});
+	</script>
+</body>
+
+</html>

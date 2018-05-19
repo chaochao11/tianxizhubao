@@ -1,0 +1,90 @@
+<div class="sub-page-content flex">
+    <div class="card layout-row md-whiteframe-1dp operate-form">
+        <div class="layout-column flex">
+            <md-tabs md-dynamic-height>
+                <md-tab label="店铺联系方式">
+                    <form name="operateContactForm" novalidate class="flex">
+                        <md-content class="md-padding">
+                            <div class="layout-row flex">
+                                <md-input-container class="md-block flex-33">
+                                    <label>联系电话</label>
+                                    <input type="text" name="phone" ng-model="contactObj.phone" minlength="11"
+                                           maxlength="11" pattern="^[1][358][0-9]{9}$"
+                                           required placeholder="请输入联系电话">
+                                    <div ng-messages="operateContactForm.phone.$error">
+                                        <div ng-message="required">联系电话不能为空</div>
+                                        <div ng-message="minlength,maxlength">请输入正确的联系电话</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>联系人姓名</label>
+                                    <input type="text" name="name" ng-model="contactObj.name" minlength="2"
+                                           maxlength="4"
+                                           required placeholder="请输入联系人姓名">
+                                    <div ng-messages="operateContactForm.name.$error">
+                                        <div ng-message="required">联系人姓名不能为空</div>
+                                        <div ng-message="minlength,maxlength">请输入正确的联系人姓名</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="layotur-column">
+                                <md-input-container class="md-block flex">
+                                    <label>联系地址</label>
+                                    <input type="text" name="address" ng-model="contactObj.address" required
+                                           placeholder="请输入店铺的联系地址">
+                                    <div ng-messages="operateContactForm.address.$error">
+                                        <div ng-message="required">联系地址不能为空</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row">
+                                <md-input-container>
+                                    <md-button class="md-raised md-primary"
+                                               ng-disabled="operateContactForm.$invalid"
+                                               ng-click="saveContact($event,contactObj)">立即保存
+                                    </md-button>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </form>
+                </md-tab>
+                <md-tab label="售后联系方式">
+                    <form name="operateAfterSalesForm" novalidate class="flex">
+                    <md-content class="md-padding">
+                        <div class="layout-row flex">
+                            <md-input-container class="md-block flex-33">
+                                <label>售后联系手机</label>
+                                <input type="text" name="phone" ng-model="afterSalesObj.phone" minlength="11" maxlength="11"
+                                       pattern="^[1][358][0-9]{9}$"
+                                       required placeholder="请输入售后联系电话">
+                                <div ng-messages="operateAfterSalesForm.phone.$error">
+                                    <div ng-message="required">售后联系手机不能为空</div>
+                                    <div ng-message="pattern">请输入正确的联系手机号码</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block flex-33">
+                                <label>售后联系座机</label>
+                                <input type="text" name="tel" ng-model="afterSalesObj.tel" pattern="(\d{2,5}-\d{7,8}(-\d{1,})?)|(13\d{9})|(159\d{8})"
+                                       required placeholder="请输入联系人姓名">
+                                <div ng-messages="operateAfterSalesForm.tel.$error">
+                                    <div ng-message="required">售后座机号码不能为空</div>
+                                    <div ng-message="pattern">请输入正确的座机号码</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div class="layout-row">
+                            <md-input-container>
+                                <md-button class="md-raised md-primary"
+                                           ng-disabled="operateAfterSalesForm.$invalid"
+                                           ng-click="saveAfterSales($event,afterSalesObj)">立即保存
+                                </md-button>
+                            </md-input-container>
+                        </div>
+                    </md-content>
+                    </form>
+                </md-tab>
+            </md-tabs>
+
+        </div>
+    </div>
+</div>

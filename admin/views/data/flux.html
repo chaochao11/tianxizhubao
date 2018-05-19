@@ -1,0 +1,306 @@
+<div class="data-info-wrapper">
+    <div class="card-container">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">
+                    流量总览
+                </h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="fluxeDataType" ng-change="fluxeDataChange(fluxeDataType)">
+                        <md-option ng-value="0" selected>当日数据</md-option>
+                        <md-option ng-value="1">最近1日</md-option>
+                        <md-option ng-value="2">最近7日</md-option>
+                        <md-option ng-value="3">按日检索</md-option>
+                        <!--<md-option ng-value="4">按月检索</md-option>-->
+                    </md-select>
+                    <md-datepicker ng-model="fluxDataTime"
+                                   md-max-date="currentDate"
+                                   name="fluxDataTime" md-open-on-focus md-is-open="true"
+                                   ng-change="fluxDataTimeChange(fluxDataTime)"
+                                   required
+                                   ng-if="fluxeDataType===3">
+                    </md-datepicker>
+                </div>
+            </div>
+            <div class="card-data-content">
+                <ul class="flux-overview-tab">
+                    <li ng-click="switchFluxTab(fluxeDataType,1)" ng-class="{'active':tabID===1}">
+                        <h4 class="overview-title">访问店铺</h4>
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">访客数</p>
+                                <p class="name">{{txt}}</p>
+                            </div>
+                            <div class="flex" style="text-align: right">
+                                <h5 class="value">{{uvData.uv.data}}</h5>
+                                <p class="compare-value"
+                                   ng-class="{'down':uvData.uv.riseOrFall===-1,'up':uvData.uv.riseOrFall===1}">
+                                    <span>{{uvData.uv.change===null?'-':uvData.uv.change}}</span>
+                                    <i class="icon"
+                                       ng-class="{'icon-arrow-down':uvData.uv.riseOrFall===-1,'icon-arrow-up':uvData.uv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxTab(fluxeDataType,2)" ng-class="{'active':tabID===2}">
+                        <h4 class="overview-title">访问商品</h4>
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">商品访客数</p>
+                                <p class="name">{{txt}}</p>
+                            </div>
+                            <div class="flex" style="text-align: right">
+                                <h5 class="value">{{uvGoods.uv.data}}</h5>
+                                <p class="compare-value up">
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvGoods.uv.riseOrFall===-1,'up':uvGoods.uv.riseOrFall===1}">{{uvGoods.uv.change===null?'-':uvGoods.uv.change}}</span>
+                                    <i class="icon" ng-if="uvGoods.uv.change!==null"
+                                       ng-class="{'icon-arrow-down':uvGoods.uv.riseOrFall===-1,'icon-arrow-up':uvGoods.uv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxTab(fluxeDataType,3)" ng-class="{'active':tabID===3}">
+                        <h4 class="overview-title">转化</h4>
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">支付买家数</p>
+                                <p class="name">{{txt}}</p>
+                            </div>
+                            <div class="flex" style="text-align: right">
+                                <h5 class="value">{{conversionData.payuser.data}}</h5>
+                                <p class="compare-value">
+                                    <span ng-class="{'down':conversionData.payuser.riseOrFall===-1,'up':conversionData.payuser.riseOrFall===1}">{{conversionData.payuser.change===null?'-':conversionData.payuser.change}}</span>
+                                    <i class="icon" ng-if="conversionData.payuser.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.payuser.riseOrFall===-1,'icon-arrow-up':conversionData.payuser.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="flux-tab-content" ng-if="tabID===1">
+                    <li ng-click="switchFluxDataChart(1,fluxeDataType)" ng-class="{'active':fluxChartID===1}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">访客数</p>
+                                <h5 class="value">{{uvData.uv.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvData.uv.riseOrFall===-1,'up':uvData.uv.riseOrFall===1}">{{uvData.uv.change===null?'-':uvData.uv.change}}</span>
+                                    <i class="icon"
+                                       ng-class="{'icon-arrow-down':uvData.uv.riseOrFall===-1,'icon-arrow-up':uvData.uv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(2,fluxeDataType)" ng-class="{'active':fluxChartID===2}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">浏览量</p>
+                                <h5 class="value">{{uvData.pv.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvData.pv.riseOrFall===-1,'up':uvData.pv.riseOrFall===1}">{{uvData.pv.change===null?'-':uvData.pv.change}}</span>
+                                    <i class="icon"
+                                       ng-class="{'icon-arrow-down':uvData.pv.riseOrFall===-1,'icon-arrow-up':uvData.pv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(3,fluxeDataType)" ng-class="{'active':fluxChartID===3}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">人均浏览量</p>
+                                <h5 class="value">{{uvData.perPv.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvData.perPv.riseOrFall===-1,'up':uvData.perPv.riseOrFall===1}">{{uvData.perPv.change===null?'-':uvData.perPv.change}}</span>
+                                    <i class="icon"
+                                       ng-class="{'icon-arrow-down':uvData.perPv.riseOrFall===-1,'icon-arrow-up':uvData.perPv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(4,fluxeDataType)" ng-class="{'active':fluxChartID===4}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">老访客数</p>
+                                <h5 class="value">{{uvData.older.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvData.older.riseOrFall===-1,'up':uvData.older.riseOrFall===1}">{{uvData.older.change===null?'-':uvData.older.change}}</span>
+                                    <i class="icon icon-arrow-down" ng-if="uvData.older.change!==null"
+                                       ng-class="{'icon-arrow-down':uvData.older.riseOrFall===-1,'icon-arrow-up':uvData.older.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="no-border" ng-click="switchFluxDataChart(5,fluxeDataType)"
+                        ng-class="{'active':fluxChartID===5}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">新访客数</p>
+                                <h5 class="value">{{uvData.newer.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvData.newer.riseOrFall===-1,'up':uvData.newer.riseOrFall===1}">{{uvData.newer.change===null?'-':uvData.newer.change}}</span>
+                                    <i class="icon" ng-if="uvData.newer.change!==null"
+                                       ng-class="{'icon-arrow-down':uvData.newer.riseOrFall===-1,'icon-arrow-up':uvData.newer.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="flux-tab-content" ng-if="tabID===2">
+                    <li ng-click="switchFluxDataChart(6,fluxeDataType)" ng-class="{'active':fluxChartID===6}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">商品访客数</p>
+                                <h5 class="value">{{uvGoods.uv.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvGoods.uv.riseOrFall===-1,'up':uvGoods.uv.riseOrFall===1}">{{uvGoods.uv.change===null?'-':uvGoods.uv.change}}</span>
+                                    <i class="icon" ng-if="uvGoods.uv.change!==null"
+                                       ng-class="{'icon-arrow-down':uvGoods.uv.riseOrFall===-1,'icon-arrow-up':uvGoods.uv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(7,fluxeDataType)" ng-class="{'active':fluxChartID===7}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">商品浏览量</p>
+                                <h5 class="value">{{uvGoods.pv.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvGoods.pv.riseOrFall===-1,'up':uvGoods.pv.riseOrFall===1}">{{uvGoods.pv.change===null?'-':uvGoods.pv.change}}</span>
+                                    <i class="icon" ng-if="uvGoods.pv.change!==null"
+                                       ng-class="{'icon-arrow-down':uvGoods.pv.riseOrFall===-1,'icon-arrow-up':uvGoods.pv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(8,fluxeDataType)" ng-class="{'active':fluxChartID===8}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">商品收藏买家数</p>
+                                <h5 class="value">{{uvGoods.collect.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':uvGoods.collect.riseOrFall===-1,'up':uvGoods.collect.riseOrFall===1}">{{uvGoods.collect.change===null?'-':uvGoods.collect.change}}</span>
+                                    <i class="icon" ng-if="uvGoods.collect.change!==null"
+                                       ng-class="{'icon-arrow-down':uvGoods.collect.riseOrFall===-1,'icon-arrow-up':uvGoods.collect.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="flux-tab-content" ng-if="tabID===3">
+                    <li ng-click="switchFluxDataChart(9,fluxeDataType)" ng-class="{'active':fluxChartID===9}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">支付买家数</p>
+                                <h5 class="value">{{conversionData.payuser.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':conversionData.payuser.riseOrFall===-1,'up':conversionData.payuser.riseOrFall===1}">{{conversionData.payuser.change===null?'-':conversionData.payuser.change}}</span>
+                                    <i class="icon" ng-if="conversionData.payuser.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.payuser.riseOrFall===-1,'icon-arrow-up':conversionData.payuser.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(10,fluxeDataType)" ng-class="{'active':fluxChartID===10}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">支付金额</p>
+                                <h5 class="value">¥{{conversionData.sum.data|number:2}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':conversionData.sum.riseOrFall===-1,'up':conversionData.sum.riseOrFall===1}">{{conversionData.sum.change===null?'-':conversionData.sum.change}}</span>
+                                    <i class="icon" ng-if="conversionData.sum.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.sum.riseOrFall===-1,'icon-arrow-up':conversionData.sum.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(11,fluxeDataType)" ng-class="{'active':fluxChartID===11}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">支付转化率</p>
+                                <h5 class="value">{{conversionData.paychange.data+"%"}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':conversionData.paychange.riseOrFall===-1,'up':conversionData.paychange.riseOrFall===1}">{{conversionData.paychange.change===null?'-':conversionData.paychange.change}}</span>
+                                    <i class="icon" ng-if="conversionData.paychange.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.paychange.riseOrFall===-1,'icon-arrow-up':conversionData.paychange.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li ng-click="switchFluxDataChart(12,fluxeDataType)" ng-class="{'active':fluxChartID===12}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">下单买家数</p>
+                                <h5 class="value">{{conversionData.createuser.data+"%"}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':conversionData.createuser.riseOrFall===-1,'up':conversionData.createuser.riseOrFall===1}">{{conversionData.createuser.change===null?'-':conversionData.createuser.change}}</span>
+                                    <i class="icon" ng-if="conversionData.createuser.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.createuser.riseOrFall===-1,'icon-arrow-up':conversionData.createuser.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="no-border" ng-click="switchFluxDataChart(13,fluxeDataType)"
+                        ng-class="{'active':fluxChartID===13}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">下单转化率</p>
+                                <h5 class="value">{{conversionData.createchange.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':conversionData.createchange.riseOrFall===-1,'up':conversionData.createchange.riseOrFall===1}">{{conversionData.createchange.change===null?'-':conversionData.createchange.change}}</span>
+                                    <i class="icon" ng-if="conversionData.createchange.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.createchange.riseOrFall===-1,'icon-arrow-up':conversionData.createchange.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="no-border" ng-click="switchFluxDataChart(14,fluxeDataType)"
+                        ng-class="{'active':fluxChartID===14}">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">UV值</p>
+                                <h5 class="value">{{conversionData.uv.data}}</h5>
+                                <p class="compare">
+                                    <span class="name">{{txt}}</span>
+                                    <span class="compare-value"
+                                          ng-class="{'down':conversionData.uv.riseOrFall===-1,'up':conversionData.uv.riseOrFall===1}">{{conversionData.uv.change===null?'-':conversionData.uv.change}}</span>
+                                    <i class="icon" ng-if="conversionData.uv.change!==null"
+                                       ng-class="{'icon-arrow-down':conversionData.uv.riseOrFall===-1,'icon-arrow-up':conversionData.uv.riseOrFall===1}"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="mt-15 layout-column flex">
+                    <flux-all-data-chart id="fluxAllDataContainer" class="flex"></flux-all-data-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

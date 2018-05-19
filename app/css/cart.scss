@@ -1,0 +1,85 @@
+@import "global";
+
+/*购物车*/
+.cart-list{
+  .item-content{
+    padding: toRem(15px)!important;
+  }
+  .cart-item{
+    display: flex;
+    align-items: center;
+    .product-img{
+      @extend %product-img;
+    }
+    .product-info{
+      @extend %product-info;
+    }
+    .cart-price-operate{
+      @extend %num-operate;
+    }
+  }
+}
+.item-select-status{
+  width: toRem(15px);
+  height:toRem(15px);
+  background: url('../images/icon/icon_unselect@2x.png') no-repeat;
+  background-size: 100%;
+  margin-right: toRem(26px);
+  input[type=checkbox]{
+    opacity: 0;
+    transform: scale(3.5);
+  }
+}
+.item-selected{
+  @extend .item-select-status;
+  background: url("../images/icon/icon_selected@2x.png") no-repeat;
+  background-size: 100%;
+}
+.operate-bar{
+  $h:toRem(50px);
+  height:$h;
+  bottom:toRem(48px);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding:0 0 0 toRem(16px);
+  .select-all{
+    flex:1;
+    display: flex;
+    align-items: center;
+    input[type=checkbox]{
+      opacity: 0;
+    }
+    .item-select-status{
+      margin-right:toRem(5px);
+    }
+  }
+  .totalPirce{
+    p{
+      margin-bottom: 0;
+    }
+    .total{
+      font-size: toRem(17px);
+    }
+    .coupon{
+      font-size: toRem(12px);
+      color:$gray-color;
+      text-align: right;
+    }
+  }
+  .btn-account{
+    width: toRem(100px);
+    text-align: center;
+    border:none;
+    background: $main-color;
+    color:#fff;
+    height:$h;
+    margin-left: toRem(15px);
+    font-size: toRem(17px);
+    padding:0;
+    border-radius: 0;
+  }
+  .btn-delete{
+    @extend .btn-account;
+  }
+}

@@ -1,0 +1,119 @@
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <!--表格操作栏开始-->
+        <div class="table-action layout-row flex">
+            <div class="layout-row flex">
+                <md-button class="md-icon-button" ng-disabled="selected.length<=0" ng-click="exportToExcel(selected,$event)">
+                    <md-tooltip>
+                        导出所选到Excel
+                    </md-tooltip>
+                    <md-icon md-svg-icon="exportExcel"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="toggleSearchSideNav()">
+                    <md-tooltip>
+                        搜索
+                    </md-tooltip>
+                    <md-icon md-font-set="md">search</md-icon>
+                </md-button>
+            </div>
+            <div class="layout-row right-select">
+                <md-select ng-model="billByType" ng-change="typeChange(billByType)">
+                    <md-option ng-value="0" selected>按日期</md-option>
+                    <md-option ng-value="1">按月份</md-option>
+                </md-select>
+            </div>
+        </div>
+        <!--表格操作栏结束-->
+
+        <!--表格列表开始-->
+        <div class="full-page-table">
+            <div class="table-header layout-row flex" id="scroll_bar">
+                <div class="header-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="isSelected()"
+                                 ng-click="toggleAll()"
+                                 ng-hide="goodsList.list.length==0"
+                    </md-checkbox>
+                </div>
+
+                <div class="header-item flex-25">
+                    <a ng-click="sortItem='name';desc=!desc">结算日期</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-15">
+                    <a ng-click="sortItem='username';desc=!desc">收入（元）</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-15">
+                    <a ng-click="sortItem='stock';desc=!desc">提现（元）</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-15">
+                    <a ng-click="sortItem='totalsalesnum';desc=!desc">余额（元）</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalsalesnum'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalsalesnum'&&desc">arrow_drop_up</md-icon>
+                </div>
+            </div>
+        </div>
+        <perfect-scrollbar class="table-scroll" tablescroll>
+            <!--空状态开始-->
+            <div class="no-data" ng-if="billList.list.length==0">
+                <md-icon md-svg-icon="attention"></md-icon>
+                <span class="attention-note">暂无符合条件的数据</span>
+            </div>
+            <!--空状态结束-->
+            <!--表格列表开始-->
+            <div class="table-item-row layout-row flex" ng-repeat="item in billList.list | orderBy:sortItem:desc" ng-class="{'selected':exists(item, selected)}">
+                <div class="table-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="exists(item, selected)"
+                                 ng-click="toggle(item, selected)">
+                    </md-checkbox>
+                </div>
+                <div class="table-item flex-25 layout-row">
+                    2017-08-10
+                </div>
+                <div class="table-item flex-15">
+                    ¥1000
+                </div>
+                <div class="table-item flex-15 goods">¥1000</div>
+                <div class="table-item flex-15">¥1000</div>
+            </div>
+        </perfect-scrollbar>
+        <!--表格列表结束-->
+        <!--表格分页栏开始-->
+        <page method="billList"></page>
+        <!--表格分页栏结束-->
+    </div>
+    <!--搜索面板开始-->
+    <md-sidenav class="md-sidenav-left md-whiteframe-10dp layout-column" md-is-open="isSearchSideNavOpen"
+                md-component-id="searchSideNav">
+        <md-toolbar>
+            <span class="md-toolbar-tools search-header-title">搜索对账单</span>
+        </md-toolbar>
+        <div class="search-panel-list">
+            <md-input-container class="md-block">
+                <label>对账单日期</label>
+                <md-datepicker ng-model="searchObj.date" name="date"
+                               md-open-on-focus required"></md-datepicker>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>对账单年份</label>
+                <md-select ng-model="searchObj.year" name="year">
+                    <md-option selected ng-value="2017">2017年</md-option>
+                    <md-option ng-value="2016">2016年</md-option>
+                    <md-option ng-value="2015">2015年</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised md-primary" ng-click="searchBill(searchObj)">搜索</md-button>
+            </md-input-container>
+        </div>
+    </md-sidenav>
+    <!--搜索面板结束-->
+</div>

@@ -1,0 +1,481 @@
+@import "global";
+
+.icon-integral {
+  @extend %icon;
+  background: url("../images/icon/icon_integral@2x.png") no-repeat center;
+  background-size: 100%;
+}
+
+.icon-phone {
+  @extend %icon;
+  background: url("../images/icon/icon_phone@2x.png") no-repeat center;
+  background-size: 100%;
+}
+
+.icon-address {
+  @extend %icon;
+  background: url("../images/icon/icon_address@2x.png") no-repeat center;
+  background-size: 100%;
+}
+.icon-verifly-code{
+  @extend %icon;
+  background: url("../images/icon/icon_sms_code@2x.png") no-repeat center;
+  background-size: 100%;
+}
+
+/*用户中心*/
+.ucenter-header-bar {
+  $h: toRem(88px);
+  height: $h;
+  background: $main-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: toRem(15px);
+  .basic-info {
+    display: flex;
+    align-items: center;
+    .avatar-img {
+      $avatar-size: toRem(60px);
+      margin-right: toRem(20px);
+      overflow: hidden;
+      border-radius: 100%;
+      img{
+        width: $avatar-size;
+        height: auto;
+      }
+    }
+    .user-name {
+      color: #fff;
+      font-size: toRem(17px);
+    }
+  }
+  .integral {
+    width: toRem(134px);
+    height: toRem(24px);
+    line-height: toRem(24px);
+    background: #737373;
+    border-radius: toRem(100px) 0 0 toRem(100px);
+    margin-bottom: 0;
+    padding-left: toRem(25px);
+    color: #fff;
+  }
+}
+
+/*订单导航*/
+.order-status-nav {
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  .order-status-item {
+    width: 25%;
+    text-align: center;
+    font-size: toRem(14px);
+    color: #666;
+    position: relative;
+    .badge{
+      top:-(toRem(10px));
+      right:toRem(15px);
+    }
+    .icon-unpay {
+      @extend %icon;
+      background: url("../images/icon/icon_order_unpay@2x.png") no-repeat;
+      background-size: 100%;
+    }
+    .icon-undeliver {
+      @extend %icon;
+      background: url("../images/icon/icon_order_undeliver@2x.png") no-repeat;
+      background-size: 100%;
+    }
+    .icon-untake {
+      @extend %icon;
+      background: url("../images/icon/icon_order_untake@2x.png") no-repeat;
+      background-size: 100%;
+    }
+    .icon-unevaluate {
+      @extend %icon;
+      background: url("../images/icon/icon_order_unevaluate@2x.png") no-repeat;
+      background-size: 100%;
+    }
+  }
+}
+
+.intergral-nav-item {
+  margin: toRem(5px) 0;
+}
+
+/*我的积分*/
+.intergral-container {
+  .ucenter-header-bar {
+    display: block;
+    padding-left: 0;
+    height: toRem(120px);
+    margin-bottom: toRem(25px);
+    .basic-info {
+      width: 100%;
+      text-align: center;
+      flex-direction: column;
+      .avatar-img {
+        margin: toRem(15px) 0 toRem(5px) 0;
+        width: toRem(50px);
+        height: toRem(50px);
+      }
+      .user-name {
+        font-size: toRem(14px);
+      }
+      .intergarl-desc {
+        $h: toRem(36px);
+        background: #fff;
+        box-shadow: 0 toRem(2px) toRem(4px) 0 rgba(0, 0, 0, 0.16);
+        border-radius: toRem(100px);
+        width: toRem(200px);
+        height: $h;
+        line-height: $h;
+        font-size: toRem(16px);
+      }
+    }
+  }
+  .intergral-rules {
+    margin-bottom: toRem(10px);
+  }
+  .intergral-item {
+    display: flex;
+    align-items: center;
+    align-content: space-between;
+    .time {
+      font-size: toRem(12px);
+      color: $gray-color;
+    }
+    .item-left {
+      flex: 1;
+    }
+    .intergral-num {
+      font-size: toRem(24px);
+    }
+  }
+}
+
+/*订单tabs*/
+.order-type-nav {
+  top: 0 !important;
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+  .order-type-item {
+    opacity: .5;
+    &.active {
+      opacity: 1;
+      color: $main-color !important;
+      border-bottom: 1px solid $main-color !important;
+    }
+  }
+}
+
+/*订单列表*/
+.order-list{
+  margin-top: toRem(20px);
+  .order-item{
+    background: #fff;
+    border-top:$border;
+    border-bottom:$border;
+    margin-bottom: toRem(5px);
+    .product-item{
+      display: flex;
+      align-items: center;
+      border-bottom:$border;
+      padding: toRem(12px) toRem(16px) 0 toRem(12px);
+      .product-img{
+        @extend %product-img;
+      }
+      .product-info{
+        @extend %product-info;
+      }
+    }
+    .order-status{
+      font-size: toRem(14px);
+      color:#666;
+      padding: toRem(12px) toRem(16px);
+      display: flex;
+      align-items: center;
+      align-content: space-around;
+      border-bottom: $border;
+      .order-num{
+        width: 70%;
+      }
+      .status{
+        width: 30%;
+        text-align: right;
+      }
+    }
+    .order-total{
+      padding: toRem(12px) toRem(16px);
+      text-align: right;
+      color:#666;
+    }
+    .order-operate{
+      border-top:$border;
+      padding: toRem(12px) toRem(16px);
+      text-align: right;
+      .btn-cancel{
+        @extend %btn;
+        opacity:.3;
+      }
+      .btn-normal{
+        @extend %btn;
+      }
+    }
+  }
+}
+
+/*订单详情*/
+.status-bar{
+  $bg-corlor:(unpay:#fab547,undeliver:#ff766c,untake:#43b78e,uncomment:#6dc3ff,cancel:#ccc);
+  height:toRem(44px)!important;
+  color:#fff;
+  display: flex;
+  align-items: center;
+  padding:0 toRem(15px);
+  margin-bottom: toRem(5px);
+ .status{
+   flex:1;
+   display: flex;
+   align-items: center;
+   .icon{
+     @extend %icon;
+     width: toRem(17px);
+     height:toRem(17px);
+     margin-right: toRem(10px);
+     &.icon-undeliver{
+       background: url("../images/icon/icon_undeliver@2x.png") no-repeat;
+       background-size: 100%;
+     }
+     &.icon-unpay{
+       background: url("../images/icon/icon_unpay@2x.png") no-repeat;
+       background-size: 100%;
+     }
+     &.icon-untake{
+       background: url("../images/icon/icon_untake@2x.png") no-repeat;
+       background-size: 100%;
+     }
+     &.icon-uncomment{
+       background: url("../images/icon/icon_uncomment@2x.png") no-repeat;
+       background-size: 100%;
+     }
+     &.icon-cancel-order{
+       background: url("../images/icon/icon_cancel_order@2x.png") no-repeat;
+       background-size: 100%;
+     }
+   }
+   .status-txt{
+     font-size: toRem(17px);
+   }
+ }
+  &.unpay{
+    background: map-get($bg-corlor,unpay);
+  }
+  &.undeliver{
+    background: map-get($bg-corlor,undeliver);
+  }
+  &.untake{
+    background: map-get($bg-corlor,untake);
+  }
+  &.uncomment{
+    background: map-get($bg-corlor,uncomment);
+  }
+  &.cancel{
+    background: map-get($bg-corlor,cancel);
+  }
+}
+/*收货地址*/
+.take-address{
+  background: #fff;
+  border:$border;
+  margin-bottom: toRem(10px);
+  .contact{
+    display: flex;
+    color:#666;
+    margin-bottom: toRem(10px);
+    .user{
+      flex:1;
+    }
+  }
+  .address{
+    font-size: toRem(17px);
+  }
+}
+/*订单中的产品列表*/
+.order-product-list{
+  .order-product-item{
+    background: #fff;
+    border-top:$border;
+    &:last-child{
+      border-bottom:$border;
+    }
+  }
+  .product-item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    .product-img{
+      @extend %product-img;
+    }
+    .product-info{
+      @extend %product-info;
+    }
+  }
+}
+
+/*订单结算*/
+.order-count{
+  margin-top: toRem(10px);
+  border-top:$border;
+  border-bottom:$border;
+  .count-item{
+    display: flex;
+    color:#666;
+    margin-bottom: toRem(10px);
+    p{
+      flex:1;
+      &.count{
+        text-align: right;
+      }
+      &.total{
+        @extend .count;
+        font-size: toRem(16px);
+      }
+    }
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}
+.order-total{
+  @extend .order-count;
+  margin-top: 0;
+  border-top:0;
+  .count-item{
+    color:#333;
+  }
+}
+.order-operate-bar{
+  display: flex;
+  padding:0;
+  .btn-cancel{
+    @extend %btn;
+    border:none;
+    border-radius: 0;
+    width: 50%;
+    background: #000;
+    opacity: .3;
+    color:#fff;
+  }
+  .btn-normal{
+    @extend .btn-cancel;
+    opacity:1;
+    &.confirm{
+      width: 100%;
+    }
+  }
+}
+
+/*订单评价*/
+.order-comment-list{
+  .order-product-item{
+    margin-bottom: toRem(10px);
+    &:first-child{
+      border-top:none;
+    }
+  }
+  .rating-level{
+    text-align: center;
+    border-top:$border;
+    li{
+      font-size: toRem(24px);
+    }
+  }
+  .rating-tips{
+    margin-top: toRem(15px);
+    color:#666;
+  }
+  .comment-content{
+    textarea{
+      width: 100%;
+      padding:toRem(10px);
+      border:$border;
+    }
+  }
+}
+
+.bottom-comment-operate-bar{
+  padding:0;
+  .btn-normal-full{
+    width: 100%;
+  }
+}
+
+/*地址管理*/
+.address-item{
+  margin-bottom: toRem(10px);
+  .take-address{
+    margin-bottom: 0;
+  }
+  .address-operate-bar{
+    background: #fff;
+    display: flex;
+    align-items: center;
+    .address-item-select{
+      flex:2;
+    }
+    .btn-group{
+      flex:1;
+      button{
+        &:first-child{
+          margin-right:toRem(16px);
+        }
+      }
+    }
+  }
+  .icon-unselected{
+    @include icon(toRem(15px),toRem(15px));
+    background: url("../images/icon/icon_unselect@2x.png") no-repeat;
+    background-size: 100%;
+    margin-right: toRem(10px);
+  }
+  .icon-selected{
+    @extend .icon-unselected;
+    background: url("../images/icon/icon_selected@2x.png") no-repeat;
+    background-size: 100%;
+  }
+}
+.bottom-address-operate-bar{
+  @extend .bottom-comment-operate-bar;
+}
+
+/*新增或更新地址*/
+.operate-address{
+  background: #fff;
+}
+
+/*绑定手机*/
+.bind-item{
+  display: flex;
+  align-items: center;
+  //.icon-phone{
+  //  @include icon(toRem(20px),toRem(20px));
+  //  background: url("../images/icon/icon_phone_num@2x.png") no-repeat;
+  //  background-size: 100%;
+  //}
+  //.icon-verifly-code{
+  //  @include icon(toRem(20px),toRem(20px));
+  //  background: url("../images/icon/icon_verilfy_code@2x.png") no-repeat;
+  //  background-size: 100%;
+  //}
+  input{
+    flex: 2;
+    margin-left: toRem(10px);
+  }
+  .btn-normal{
+   font-size: toRem(10px);
+    min-height: 0!important;
+    line-height:22px!important;
+  }
+}

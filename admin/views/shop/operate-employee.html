@@ -1,0 +1,55 @@
+<div class="sub-page-content flex">
+    <div class="card layout-row md-whiteframe-1dp operate-form">
+        <div class="layout-row flex">
+            <form name="operateEmployeeForm" novalidate class="flex">
+
+                <div class="layout-row flex">
+                    <md-input-container class="md-block flex">
+                        <label>账户名称</label>
+                        <input type="text" name="name" ng-model="employeeObj.name" minlength="2"
+                               maxlength="10"
+                               required placeholder="请输入2-10个字符的账户名称" ng-disabled="status=='edit'">
+                        <div ng-messages="operateEmployeeForm.name.$error">
+                            <div ng-message="required">账户名称不能为空</div>
+                            <div ng-message="minlength,maxlength">账户名称长度仅允许在2-10个字符</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block flex">
+                        <label>登陆密码</label>
+                        <input type="password" name="password" ng-model="employeeObj.password" minlength="1" maxlength="32" ng-required="status!='edit'" placeholder="{{passwordTips}}">
+                        <div ng-messages="operateEmployeeForm.password.$error">
+                            <div ng-message="required">登陆密码不能为空</div>
+                            <div ng-message="minlength,maxlength">登陆密码长度仅允许在1-16个字符</div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <div class="layout-row flex">
+                    <md-input-container class="md-block flex">
+                        <label>权限</label>
+                        <md-select ng-model="employeeObj.role">
+                            <md-option ng-value="1" selected>管理员</md-option>
+                            <md-option ng-value="2">客服</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block flex">
+                        <label>状态</label>
+                        <md-select ng-model="employeeObj.status">
+                            <md-option ng-value="1" selected>启用</md-option>
+                            <md-option ng-value="0">禁用</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                <div class="layout-row">
+                    <md-input-container>
+                        <md-button class="md-raised md-primary"
+                                   ng-disabled="operateEmployeeForm.$invalid"
+                                   ng-click="saveEmployee(employeeObj,$event)">立即保存
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

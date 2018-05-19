@@ -1,0 +1,6 @@
+<ion-header-bar class="product-details-nav">
+    <a ui-sref="index.product-desc({id:{{productID}}})" class="nav-item" nav-transition="no" ui-sref-active="active" ng-class="{true:'active',false:''}[isActive]">商品简介</a>
+    <a ui-sref="index.product-details({id:{{productID}}})" class="nav-item" nav-transition="no" ui-sref-active="active">图文详情</a>
+    <a ui-sref="index.product-after-sale({id:{{productID}}})" class="nav-item" nav-transition="no" ui-sref-active="active">参数/售后</a>
+    <a ui-sref="index.product-comment({id:{{productID}}})" class="nav-item" nav-transition="no" ui-sref-active="active">客户评价</a>
+</ion-header-bar>

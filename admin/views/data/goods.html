@@ -1,0 +1,245 @@
+<div class="data-info-wrapper">
+    <div class="card-container layout-column">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">商品数据概况</h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="timeDateType" ng-change="goodsTypeChange(timeDateType)">
+                        <md-option ng-value="0" selected>最近一日</md-option>
+                        <md-option ng-value="1">最近7日</md-option>
+                        <md-option ng-value="2">最近30日</md-option>
+                        <md-option ng-value="3">按日检索</md-option>
+                    </md-select>
+                    <md-datepicker ng-model="goodsDate" ng-change="goodsDateChange(goodsDate)"
+                                   md-max-date="currentDate"
+                                   name="startTime" md-open-on-focus md-is-open="true"
+                                   required
+                                   ng-if="timeDateType===3"
+                    ></md-datepicker>
+                </div>
+            </div>
+            <div class="card-data-content layout-column">
+                <ul class="goods-statistics">
+                    <li class="layout-row flex statistics-item" style="align-items: center;">
+                        <h3 class="flex-8 title">商品<br>相关</h3>
+                        <div class="layout-row flex goods-flux">
+                            <ul class="flex-75 layout-row">
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">商品总数</p>
+                                            <h5 class="value">{{goodsDataObj.productCount}}</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">在架商品数</p>
+                                            <h5 class="value">{{goodsDataObj.liveProductCount}}</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">已下架商品数</p>
+                                            <h5 class="value">{{goodsDataObj.unLiveProductCount}}</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layout-row flex statistics-item" style="align-items: center;">
+                        <h3 class="flex-8 title">流量<br>相关</h3>
+                        <div class="layout-row flex goods-flux">
+                            <ul class="layout-row flex-75">
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">支付买家数</p>
+                                            <h5 class="value">{{goodsDataObj.payPerson}}</h5>
+                                            <p class="compare">
+                                                <span class="name">{{txt}}</span>
+                                                <span class="compare-value"
+                                                      ng-class="{'up':goodsDataObj.payPersonChange>0,'down':goodsDataObj.payPersonChange<0}">{{goodsDataObj.payPersonChange===0?'-':goodsDataObj.payPersonChange+"%"}}</span>
+                                                <i class="icon"
+                                                   ng-class="{'icon-arrow-up':goodsDataObj.payPersonChange>0,'icon-arrow-down':goodsDataObj.payPersonChange<0}"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">商品浏览量</p>
+                                            <h5 class="value">{{goodsDataObj.productVisit}}</h5>
+                                            <p class="compare">
+                                                <span class="name">{{txt}}</span>
+                                                <span class="compare-value"
+                                                      ng-class="{'up':goodsDataObj.productVisitChange>0,'down':goodsDataObj.productVisitChange<0}">{{goodsDataObj.productVisitChange===0?'-':goodsDataObj.productVisitChange+"%"}}</span>
+                                                <i class="icon"
+                                                   ng-class="{'icon-arrow-up':goodsDataObj.productVisitChange>0,'icon-arrow-down':goodsDataObj.productVisitChange<0}"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">被访问商品数</p>
+                                            <h5 class="value">{{goodsDataObj.productVisitCount}}</h5>
+                                            <p class="compare">
+                                                <span class="name">{{txt}}</span>
+                                                <span class="compare-value"
+                                                      ng-class="{'up':goodsDataObj.productVisitCountChange>0,'down':goodsDataObj.productVisitCountChange<0}">{{goodsDataObj.productVisitCountChange===0?'-':goodsDataObj.productVisitCountChange+"%"}}</span>
+                                                <i class="icon"
+                                                   ng-class="{'icon-arrow-up':goodsDataObj.productVisitCountChange>0,'icon-arrow-down':goodsDataObj.productVisitCountChange<0}"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layout-row flex statistics-item" style="align-items: center;">
+                        <h3 class="flex-8 title">商品<br>转化</h3>
+                        <div class="layout-row flex goods-flux">
+                            <ul class="layout-row flex-75">
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">付款商品数</p>
+                                            <h5 class="value">{{goodsDataObj.payProductCount}}</h5>
+                                            <p class="goods compare">
+                                                <span class="name">{{txt}}</span>
+                                                <span class="compare-value"
+                                                      ng-class="{'up':goodsDataObj.payProductCountChange>0,'down':goodsDataObj.payProductCountChange<0}">{{goodsDataObj.payProductCountChange===0?'-':goodsDataObj.payProductCountChange+"%"}}</span>
+                                                <i class="icon"
+                                                   ng-class="{'icon-arrow-up':goodsDataObj.payProductCountChange>0,'icon-arrow-down':goodsDataObj.payProductCountChange<0}"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="flex-33">
+                                    <div class="flux-overview-data layout-row flex">
+                                        <div class="flex-70">
+                                            <p class="name">详情页转化率</p>
+                                            <h5 class="value">{{goodsDataObj.pvToOrder}}%</h5>
+                                            <p class="compare">
+                                                <span class="name">{{txt}}</span>
+                                                <span class="compare-value"
+                                                      ng-class="{'up':goodsDataObj.pvToOrderChange>0,'down':goodsDataObj.pvToOrderChange<0}">{{goodsDataObj.pvToOrderChange===0?'-':goodsDataObj.pvToOrderChange+"%"}}</span>
+                                                <i class="icon"
+                                                   ng-class="{'icon-arrow-up':goodsDataObj.pvToOrderChange>0,'icon-arrow-down':goodsDataObj.pvToOrderChange<0}"></i>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-column mt-15">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">商品数据概况</h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="goodsSalesDateType" ng-change="goodsSalesDateTypeChange(goodsSalesDateType)">
+                        <md-option ng-value="0" selected>最近7日</md-option>
+                        <md-option ng-value="1">最近30日</md-option>
+                        <md-option ng-value="2">按年检索</md-option>
+                    </md-select>
+                    <md-select ng-model="goodsDataMonth" ng-change="goodsDataMonthChange(goodsDataMonth)" ng-if="goodsSalesDateType===2">
+                        <md-option ng-value="0" selected>请选择年份</md-option>
+                        <md-option ng-repeat="item in yearList" ng-value="item">
+                            {{item}}年
+                        </md-option>
+                    </md-select>
+                    <md-button class="md-icon-button" ng-click="exportToExcel(selected,$event)">
+                        <md-tooltip>
+                            导出所选到Excel
+                        </md-tooltip>
+                        <md-icon md-svg-icon="exportExcel"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div class="card-data-content layout-column">
+                <goods-sales-data-chart id="goodsSalesDataContainer"
+                                        class="flex">
+                </goods-sales-data-chart>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-column mt-15">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">支付金额排行Top15</h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="goodsPayRankSelect" ng-change="goodsPayRankChange(goodsPayRankSelect)">
+                        <md-option ng-value="0" selected>最近7日</md-option>
+                        <md-option ng-value="1">最近30日</md-option>
+                        <md-option ng-value="2">按月检索</md-option>
+                    </md-select>
+                    <md-select ng-model="goodsRankMonth" ng-change="goodsRankMonthChange(goodsRankMonth)" ng-if="goodsPayRankSelect===2">
+                        <md-option ng-value="0" selected>请选择月份</md-option>
+                        <md-option ng-repeat="item in rankMonthList" ng-value="item">
+                            {{item}}
+                        </md-option>
+                    </md-select>
+                    <md-button class="md-icon-button" ng-click="exportToExcel(selected,$event)">
+                        <md-tooltip>
+                            导出所选到Excel
+                        </md-tooltip>
+                        <md-icon md-svg-icon="exportExcel"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div class="card-data-content layout-column">
+                <div class="full-page-table" style="height:700px;">
+                    <div class="table-header layout-row flex">
+                        <div class="header-item flex-30">
+                           商品名称
+                        </div>
+                        <div class="header-item flex-10">
+                            访客数
+                        </div>
+                        <div class="header-item flex-10">
+                            浏览量
+                        </div>
+                        <div class="header-item flex-10">
+                           下单转化率
+                        </div>
+                        <div class="header-item flex-10">
+                            支付金额
+                        </div>
+                        <div class="header-item flex-15">
+                           付款人数
+                        </div>
+                    </div>
+                    <div class="no-data" ng-if="goodsSalesRankList.length==0" style="height:100px;">
+                        <md-icon md-svg-icon="attention"></md-icon>
+                        <span class="attention-note">暂无符合条件的数据</span>
+                    </div>
+                    <div class="table-item-row layout-row flex goods" ng-repeat="item in goodsSalesRankList">
+                        <div class="table-item flex-30 layout-row">
+                            <img ng-src="{{item.image}}">
+                            <div class="">{{item.name}}</div>
+                        </div>
+                        <div class="table-item flex-10">
+                            {{item.productUv}}
+                        </div>
+                        <div class="table-item flex-10 goods">{{item.productPv}}</div>
+                        <div class="table-item flex-10">{{item.createOrderPer}}%</div>
+                        <div class="table-item flex-10">{{item.money|currency:"¥"}}</div>
+                        <div class="table-item flex-15">{{item.payPerson}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

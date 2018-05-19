@@ -1,0 +1,66 @@
+<div class="side-bar" ng-hide="sideNavVisible">
+    <div class="parent-nav">
+        <md-toolbar>
+            <a ui-sref="index.main" class="logo"></a>
+        </md-toolbar>
+        <div class="parent-nav-list">
+            <md-button class="nav-item-btn" ng-repeat="item in navList" ui-sref="{{item.defaultUrl}}" ng-class="{'active':$state.includes('*.'+item.currentState+'.*')}">
+                <i class="icon {{item.navIcon}}"></i>
+                <span>{{item.navName}}</span>
+            </md-button>
+        </div>
+    </div>
+    <div class="sub-nav" ng-repeat="item in tempSubNav" ng-if="$state.includes('*.'+item.parentState+'.*')">
+        <h3 class="sub-nav-title">{{item.parentTitle}}</h3>
+        <a class="sub-nav-item" ng-repeat="subItem in item.navList" ui-sref="{{subItem.subNavUrl}}"
+           ng-class="{'active':$state.current.name===subItem.subState||$state.current.name.indexOf(subItem.otherState)>0}">{{subItem.navName}}</a>
+    </div>
+</div>
+<div class="flex right-content layout-column">
+    <md-toolbar class="header-right-toolbar">
+        <div class="right-toolbar-menu layout-row">
+            <div class="flex left-menu">
+                <a ng-click="toggleSideNav()" class="md-button" md-ink-ripple>
+                    <md-tooltip>
+                        {{sideNavTooltip}}
+                    </md-tooltip>
+                    <md-icon md-font-set="md">menu</md-icon>
+                </a>
+            </div>
+            <div class="layout-row">
+                <md-menu-bar class="user-menu">
+                    <md-menu>
+                        <button class="md-button user-button" md-ink-ripple
+                                ng-click="userMenuCtrl.openMenu($mdOpenMenu)">
+                            <div class="layout-row">
+                                <i class="material-icons">people</i>
+                                <span class="username hide show-gt-sm">{{loginAdminName}}</span>
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            </div>
+                        </button>
+                        <md-menu-content width="3">
+                            <!--<md-menu-item>-->
+                            <!--<md-button md-ink-ripple ng-click="goAccountList()">-->
+                            <!--<md-icon md-svg-icon="account">face</md-icon>-->
+                            <!--账号管理-->
+                            <!--</md-button>-->
+                            <!--</md-menu-item>-->
+                            <!--<md-menu-divider></md-menu-divider>-->
+                            <md-menu-item>
+                                <md-button md-ink-ripple ng-click="logout()">
+                                    <md-icon md-svg-icon="logout"></md-icon>
+                                    退出账户
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </md-menu-bar>
+            </div>
+        </div>
+    </md-toolbar>
+    <div perfect-scrollbar class="scroll-bar flex" wheel-propagation="true" id="scroll_bar">
+        <div ui-view="layoutContent">
+
+        </div>
+    </div>
+</div>

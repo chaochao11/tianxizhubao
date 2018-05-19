@@ -1,0 +1,26 @@
+<ion-view>
+    <ion-content class="main-content">
+        <div class="address-item" ng-repeat="item in addressList">
+            <div class="take-address item-bar-container">
+                <div class="contact">
+                    <p class="user">{{item.name}}</p>
+                    <p class="phone">{{item.phone}}</p>
+                </div>
+                <div class="address">
+                    {{item.addressInfo}}
+                </div>
+            </div>
+            <div class="address-operate-bar item">
+               <div class="address-item-select" ng-click="setDefault(item.id)">
+                   <i class="icon icon-unselected" ng-class="{'1':'icon-selected','0':'icon-unselected'}[item.status]"></i>默认地址</div>
+                <div class="btn-group">
+                    <button class="btn-normal" ng-click="deleteAddress(item.id)">删除</button>
+                    <button class="btn-normal" ui-sref="{{updateAddressUrl}}({id:item.id})">编辑</button>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bottom-address-operate-bar">
+        <button class="btn-normal-full" ui-sref="{{jumpUrl}}" nav-transition="ios">新增地址</button>
+    </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,58 @@
+<ion-view>
+    <ion-content class="main-content order-confirm">
+        <a class="take-address item-bar-container address-confirm item-icon-right item" ui-sref="{{jumpUrl}}">
+            <div class="contact" ng-if="!hasAddress">
+                <p class="user">{{addressObj.name}}</p>
+                <p class="phone">{{addressObj.phone}}</p>
+            </div>
+            <div class="address" ng-if="!hasAddress">
+                {{addressObj.addressInfo}}
+            </div>
+            <div ng-if="hasAddress">您还没有默认地址，点击这里添加</div>
+            <i class="icon ion-ios-arrow-forward"></i>
+        </a>
+        <ul class="order-product-list">
+            <li class="order-product-item" ng-repeat="item in submitTempOrderObj">
+                <a ui-sref="index.product-details">
+                    <div class="product-item item-bar-container">
+                        <div class="product-img">
+                            <img ng-src="{{item.pic}}" class="img">
+                        </div>
+                        <div class="product-info">
+                            <p class="category-name">{{item.category}}</p>
+                            <p class="product-name">{{item.name}}</p>
+                            <p class="product-argument">类型：{{item.property}}</p>
+                            <p class="product-price"><span class="price">{{item.price | currency:'¥'}}</span><span
+                                    class="num">x{{item.quantity}}</span></p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="item">
+            运费
+            <span class="item-note">¥10</span>
+        </div>
+        <div class="item sales-activity" ng-repeat="item in activityList">
+            <i class="icon-sales-activity"></i>
+            <p class="activity-desc">{{item.activityName}}</p>
+            <p class="activity-discount">-¥{{item.reducePrice}}</p>
+        </div>
+        <div class="item item-divider">
+            支付方式
+        </div>
+        <div class="item pay-type item-icon-right">
+            微信支付
+            <i class="icon ion-ios-checkmark-empty"></i>
+        </div>
+        <div class="item intergral-discount item-icon-right" ng-click="selectIntergarl()">
+            现有积分为1000，可抵扣10元
+            <i class="icon"
+               ng-class="{'true':'ion-ios-checkmark','false':'ion-ios-checkmark-outline'}[isSelectIntergral]"></i>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar-footer bottom-operate-bar">
+        <p class="order-confirm-total">总计：{{getTotalPrice()|currency:'¥'}}<span class="intergral">（可得积分：{{canGetIntegral}}）</span></p>
+        <button class="button btn-normal-full" ng-click="submitOrder()" ng-disabled="confirmOrderObj===undefined||hasAddress===true">提交订单</button>
+    </ion-footer-bar>
+</ion-view>

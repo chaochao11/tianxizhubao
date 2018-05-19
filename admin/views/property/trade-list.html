@@ -1,0 +1,157 @@
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <!--表格操作栏开始-->
+        <div class="table-action layout-row flex">
+            <div class="layout-row flex">
+                <md-button class="md-icon-button" ng-disabled="selected.length<=0" ng-click="deleteChecked(selected,$event)">
+                    <md-tooltip>
+                        删除所选
+                    </md-tooltip>
+                    <md-icon md-font-set="md">delete</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-disabled="selected.length<=0" ng-click="exportToExcel(selected,$event)">
+                    <md-tooltip>
+                        导出所选到Excel
+                    </md-tooltip>
+                    <md-icon md-svg-icon="exportExcel"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="toggleSearchSideNav()">
+                    <md-tooltip>
+                        搜索
+                    </md-tooltip>
+                    <md-icon md-font-set="md">search</md-icon>
+                </md-button>
+            </div>
+        </div>
+        <!--表格操作栏结束-->
+
+        <!--表格列表开始-->
+        <div class="full-page-table">
+            <div class="table-header layout-row flex" id="scroll_bar">
+                <div class="header-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="isSelected()"
+                                 ng-click="toggleAll()"
+                                 ng-hide="goodsList.list.length==0"
+                    </md-checkbox>
+                </div>
+
+                <div class="header-item flex-25">
+                    <a ng-click="sortItem='name';desc=!desc">名称</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='username';desc=!desc">价格</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='stock';desc=!desc">库存</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='totalsalesnum';desc=!desc">销量</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalsalesnum'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalsalesnum'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='commentCount';desc=!desc">评论数</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='commentCount'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='commentCount'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-15">
+                    <a ng-click="sortItem='createTime';desc=!desc">发布时间</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='createTime'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='createTime'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex">操作</div>
+            </div>
+        </div>
+        <perfect-scrollbar class="table-scroll" tablescroll>
+            <!--空状态开始-->
+            <div class="no-data" ng-if="goodsList.list.length==0">
+                <md-icon md-svg-icon="attention"></md-icon>
+                <span class="attention-note">暂无符合条件的数据</span>
+            </div>
+            <!--空状态结束-->
+            <!--表格列表开始-->
+            <div class="table-item-row layout-row flex goods" ng-repeat="item in goodsList.list | orderBy:sortItem:desc" ng-class="{'selected':exists(item, selected)}">
+                <div class="table-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="exists(item, selected)"
+                                 ng-click="toggle(item, selected)">
+                    </md-checkbox>
+                </div>
+                <div class="table-item flex-25 layout-row">
+                    <img ng-src="{{item.picture}}">
+                    <div class="">{{item.name}}</div>
+                </div>
+                <div class="table-item flex-10">
+                    ¥{{item.priceRange}}
+                </div>
+                <div class="table-item flex-10 goods">{{item.stock}}</div>
+                <div class="table-item flex-10">{{item.totalsalesnum}}</div>
+                <div class="table-item flex-10">{{item.commentCount}}</div>
+                <div class="table-item flex-15">{{item.createTime}}</div>
+                <div class="table-item flex">
+                    <a ui-sref="index.goods.update({id:{{item.jid}}})">
+                        编辑
+                        <md-tooltip>编辑商品</md-tooltip>
+                    </a>
+                    <a ng-click="groundingStock($event,item.jid)" ng-if="item.islive===0">
+                        上架
+                        <md-tooltip>上架商品</md-tooltip>
+                    </a>
+                    <a ng-click="outStock($event,item.jid)" ng-if="item.islive===1">
+                        下架
+                        <md-tooltip>下架商品</md-tooltip>
+                    </a>
+                    <a ui-sref="index.goods.comment({goodsID:{{item.jid}},pageNo:1,pageSize:10})">
+                        评论
+                        <md-tooltip>查看该商品的所有评论</md-tooltip>
+                    </a>
+                </div>
+            </div>
+        </perfect-scrollbar>
+        <!--表格列表结束-->
+        <!--表格分页栏开始-->
+        <page method="goodsList"></page>
+        <!--表格分页栏结束-->
+    </div>
+    <!--搜索面板开始-->
+    <md-sidenav class="md-sidenav-left md-whiteframe-10dp layout-column" md-is-open="isSearchSideNavOpen"
+                md-component-id="searchSideNav">
+        <md-toolbar>
+            <span class="md-toolbar-tools search-header-title">搜索商品</span>
+        </md-toolbar>
+        <div class="search-panel-list">
+            <md-input-container class="md-block">
+                <label>商品名称</label>
+                <input type="text" ng-model="searchObj.name">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>商品价格</label>
+                <input  type="text" ng-model="searchObj.price">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>商品状态</label>
+                <md-select ng-model="searchObj.status">
+                    <md-option ng-value="0">
+                        已下架
+                    </md-option>
+                    <md-option ng-value="1">
+                        无库存
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised md-primary" ng-click="searchGoods(searchObj)">搜索</md-button>
+            </md-input-container>
+        </div>
+    </md-sidenav>
+    <!--搜索面板结束-->
+</div>

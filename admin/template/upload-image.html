@@ -1,0 +1,9 @@
+<button class="btn-select-file" disabled>
+    <div class="upload-loading" ng-if="uploadProgressLoading">
+        <md-progress-circular value="{{per}}">
+
+        </md-progress-circular>
+    </div>
+    <img ng-src="../{{imgUrl}}" class="max-img">
+    <input type="file" ng-disabled="isUploadValid">
+</button>

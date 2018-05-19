@@ -1,0 +1,137 @@
+<!--<div class="sub-page-header layout-column">-->
+    <!--<div class="breadcrumb">-->
+        <!--<md-icon md-font-set="md">home</md-icon>-->
+        <!--<md-icon md-font-set="md">keyboard_arrow_right</md-icon>-->
+        <!--<span>商品管理</span>-->
+    <!--</div>-->
+    <!--<div class="page-title">属性列表</div>-->
+<!--</div>-->
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <div class="md-padding layout-row flex attr-container">
+            <div class="attr-item">
+                <div class="header">
+                    <span class="title">珍珠颜色</span>
+                    <form name="addColorAttrForm" novalidate>
+                        <md-menu md-position-mode="target-right target">
+                            <a href="javascript:;" class="icon-add" ng-click="addAttr($mdOpenMenu)">
+                                <md-tooltip>新增属性</md-tooltip>
+                            </a>
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <input type="text" ng-model="attrName" name="attrName" required>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-button class="md-raised md-primary" ng-disabled="addColorAttrForm.$invalid" ng-click="saveAttr(1,attrName)">保存
+                                </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </form>
+                </div>
+                <perfect-scrollbar class="side-nav-list attr-item-list" wheel-propagation="false" wheel-speed="50">
+                <ul>
+                    <li ng-repeat="item in colorList.itemAttributes" edit-attr>
+                        <div class="edit-container">
+                            <div class="layout-row edit-wrapper">
+                                <input ng-model="attrName" type="text">
+                                <md-button class="md-raised md-primary btn-update" data-id="{{item.id}}"
+                                           ng-disabled="attrName===''">保存
+                                </md-button>
+                                <md-button class="md-primary btn-cancel">取消</md-button>
+                            </div>
+                        </div>
+                        <span class="attr-name">{{item.value}}</span>
+                        <div class="operate">
+                            <a href="javascript:;" class="icon-edit" data-name="{{item.value}}"><md-tooltip>编辑属性</md-tooltip></a>
+                            <a href="javascript:;" class="icon-delete" ng-click="deleteAttr($event,colorList.id,item.id)"><md-tooltip>删除属性</md-tooltip></a>
+                        </div>
+                    </li>
+                </ul>
+                </perfect-scrollbar>
+            </div>
+            <div class="attr-item">
+                <div class="header">
+                    <span class="title">配件材质</span>
+                    <form name="addMaterialAttrForm" novalidate>
+                        <md-menu md-position-mode="target-right target">
+                            <a href="javascript:;" class="icon-add" ng-click="addAttr($mdOpenMenu)">
+                                <md-tooltip>新增属性</md-tooltip>
+                            </a>
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <input type="text" ng-model="attrName" name="attrName" required>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-button class="md-raised md-primary" ng-disabled="addMaterialAttrForm.$invalid" ng-click="saveAttr(2,attrName)">保存
+                                </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </form>
+                </div>
+                <perfect-scrollbar class="side-nav-list attr-item-list" wheel-propagation="false" wheel-speed="50">
+                <ul>
+                    <li ng-repeat="item in materialList.itemAttributes" edit-attr>
+                        <div class="edit-container">
+                            <div class="layout-row edit-wrapper">
+                                <input ng-model="item.value" type="text">
+                                <md-button class="md-raised md-primary btn-update" data-id="{{item.id}}"
+                                           ng-disabled="attrName===''">保存
+                                </md-button>
+                                <md-button class="md-primary btn-cancel">取消</md-button>
+                            </div>
+                        </div>
+                        <span class="attr-name">{{item.value}}</span>
+                        <div class="operate">
+                            <a href="javascript:;" class="icon-edit" data-name="{{item.value}}"><md-tooltip>编辑属性</md-tooltip></a>
+                            <a href="javascript:;" class="icon-delete" ng-click="deleteAttr($event,materialList.id,item.id)"><md-tooltip>删除属性</md-tooltip></a>
+                        </div>
+                    </li>
+                </ul>
+                </perfect-scrollbar>
+            </div>
+            <div class="attr-item">
+                <div class="header">
+                    <span class="title">尺寸</span>
+                    <form name="addSizeAttrForm" novalidate>
+                        <md-menu md-position-mode="target-right target">
+                            <a href="javascript:;" class="icon-add" ng-click="addAttr($mdOpenMenu)">
+                                <md-tooltip>新增属性</md-tooltip>
+                            </a>
+                            <md-menu-content width="3">
+                                <md-menu-item>
+                                    <input type="text" ng-model="attrName" name="attrName" required>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-button class="md-raised md-primary" ng-disabled="addSizeAttrForm.$invalid" ng-click="saveAttr(3,attrName)">保存
+                                </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </form>
+                </div>
+                <perfect-scrollbar class="side-nav-list attr-item-list" wheel-propagation="false" wheel-speed="50">
+                <ul>
+                    <li ng-repeat="item in sizeList.itemAttributes" edit-attr>
+                        <div class="edit-container">
+                            <div class="layout-row edit-wrapper">
+                                <input ng-model="item.value" type="text">
+                                <md-button class="md-raised md-primary btn-update" data-id="{{item.id}}"
+                                           ng-disabled="attrName===''">保存
+                                </md-button>
+                                <md-button class="md-primary btn-cancel">取消</md-button>
+                            </div>
+                        </div>
+                        <span class="attr-name">{{item.value}}</span>
+                        <div class="operate">
+                            <a href="javascript:;" class="icon-edit" data-name="{{item.value}}"><md-tooltip>编辑属性</md-tooltip></a>
+                            <a href="javascript:;" class="icon-delete" ng-click="deleteAttr($event,sizeList.id,item.id)"><md-tooltip>删除属性</md-tooltip></a>
+                        </div>
+                    </li>
+                </ul>
+                </perfect-scrollbar>
+            </div>
+        </div>
+    </div>
+</div>

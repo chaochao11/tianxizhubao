@@ -1,0 +1,181 @@
+<div class="data-info-wrapper">
+    <div class="card-container layout-column">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex-20">访客时段分布</h4>
+                <div class="flex layout-row operate">
+                    <md-select ng-model="timeDateType" ng-change="uvDataChange(timeDateType)">
+                        <md-option ng-value="0" selected>最近一日</md-option>
+                        <md-option ng-value="1">最近7日平均</md-option>
+                        <md-option ng-value="2">最近30日平均</md-option>
+                        <md-option ng-value="3">按日检索</md-option>
+                    </md-select>
+                    <md-datepicker ng-model="uvDataTime" md-max-date="currentDate"
+                                   name="uvDataTime" md-open-on-focus md-is-open="true"
+                                   required
+                                   ng-change="uvDataTimeChange(uvDataTime)"
+                                   ng-if="timeDateType===3"></md-datepicker>
+                    <md-button class="md-icon-button" ng-click="exportToExcel(selected,$event)">
+                        <md-tooltip>
+                            导出所选到Excel
+                        </md-tooltip>
+                        <md-icon md-svg-icon="exportExcel"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div class="card-data-content layout-column">
+                <visitor-data-chart id="visitorDataContainer" config="{{$index+2}}"></visitor-data-chart>
+            </div>
+        </div>
+    </div>
+    <div class="card-container mt-15 layout-column flex">
+        <div class="card-item">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">地域分布</h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="areaDateType" ng-change="areaDataChange(areaDateType)">
+                        <md-option ng-value="0" selected>最近一日</md-option>
+                        <md-option ng-value="1">最近7日</md-option>
+                        <md-option ng-value="2">最近30日</md-option>
+                        <md-option ng-value="3">按日检索</md-option>
+                    </md-select>
+                    <md-datepicker ng-model="areaDateTime"
+                                   md-max-date="currentDate"
+                                   md-open-on-focus md-is-open="true" ng-change="areaDataTimeChange(areaDateTime)"
+                                   required
+                                   ng-if="areaDateType===3"
+                    ></md-datepicker>
+                </div>
+            </div>
+            <div class="card-data-content layout-column">
+                <md-tabs md-dynamic-height>
+                    <md-tab label="访客数占比排行Top10">
+                        <md-content class="md-padding">
+                            <div class="layout-row flex">
+                                <div class="layout-column flex">
+                                    <area-data-chart id="areaDataContainer"></area-data-chart>
+                                </div>
+                                <div class="flex-50 ml-30">
+                                    <div class="data-table-header layout-row">
+                                        <span class="flex-15">地域</span>
+                                        <span class="flex">访客数</span>
+                                        <span class="flex-20">下单转化率</span>
+                                    </div>
+                                    <div class="data-table-content layout-row" ng-repeat="item in uvRankList">
+                                        <p class="flex-15 rank">{{item.province}}</p>
+                                        <p class="flex data-info">
+                                            <span class="data-index">
+                                                {{item.num}}
+                                            </span>
+                                            <span class="bar" style="width:{{item.num}}0%;background: {{item.color}}"></span>
+                                        </p>
+                                        <p class="flex-20 value">{{item.createOrderPer}}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="下单占比排行Top10">
+                        <md-content class="md-padding">
+                            <div class="layout-row flex">
+                                <order-area-data-chart id="orderAreaDataContainer" class="flex"></order-area-data-chart>
+                                <div class="flex-50">
+                                    <div class="data-table-header layout-row">
+                                        <span class="flex-15">地域</span>
+                                        <span class="flex">下单买家数</span>
+                                        <span class="flex-20">下单转化率</span>
+                                    </div>
+                                    <div class="data-table-content layout-row" ng-repeat="item in orderRankList">
+                                        <p class="flex-15 rank">{{item.province}}</p>
+                                        <p class="flex data-info">
+                                            <span class="data-index">
+                                                {{item.num}}
+                                            </span>
+                                            <span class="bar" style="width:{{item.num}}0%;background: {{item.color}}"></span>
+                                        </p>
+                                        <p class="flex-20 value">{{item.createOrderPer}}%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </div>
+        </div>
+    </div>
+    <div class="card-container mt-15 layout-column">
+        <div class="card-item">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">终端分布</h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="deviceDateType" ng-change="deviceDataChange(deviceDateType)">
+                        <md-option ng-value="0" selected>最近一日</md-option>
+                        <md-option ng-value="1">最近7日</md-option>
+                        <md-option ng-value="2">最近30日</md-option>
+                        <md-option ng-value="3">按日检索</md-option>
+                    </md-select>
+                    <md-datepicker ng-model="deviceDataTime"
+                                   md-max-date="currentDate"
+                                   name="deviceDataTime" md-open-on-focus md-is-open="true" ng-change="deivceDataTimeChange(deviceDataTime)"
+                                   required
+                                   ng-if="deviceDateType===3"
+                    ></md-datepicker>
+                </div>
+            </div>
+            <div class="card-data-content layout-row">
+                <div class="flex-50 layout-column">
+                    <devices-distribute-chart id="devicesDistributeContainer"></devices-distribute-chart>
+                </div>
+                <div class="flex layout-column">
+                    <div class="card-data-header" style="padding: 0;">
+                        <h4>性别</h4>
+                    </div>
+                    <div class="data-table-header layout-row">
+                        <span class="flex-15">性别</span>
+                        <span class="flex-50">访客数</span>
+                        <span class="flex ml-30">占比</span>
+                        <span class="flex-20">下单转化率</span>
+                    </div>
+                    <div class="data-table-content layout-row" ng-repeat="item in visitSexyDataList">
+                        <p class="flex-15 rank">{{item.sex}}</p>
+                        <p class="flex-50 data-info">
+                                            <span class="data-index">
+                                                {{item.num}}
+                                            </span>
+                            <span class="bar" style="width: {{item.sexPer}}%;background:{{item.color}};"></span>
+                        </p>
+                        <p class="flex ml-30">{{item.sexPer}}%</p>
+                        <p class="flex-20 value">{{item.createOrderPer}}%</p>
+                    </div>
+                    <div class="card-data-header" style="padding: 0;">
+                        <h4>新老访客</h4>
+                    </div>
+                    <div class="layout-row">
+                        <div class="flex-40 layout-column">
+                            <customer-distribute-chart id="customerDistributeContainer"></customer-distribute-chart>
+                        </div>
+                        <div class="flex">
+                            <div class="data-table-header layout-row">
+                                <span class="flex-20">访客类型</span>
+                                <span class="flex-50">访客数</span>
+                                <span class="flex">占比</span>
+                                <span class="flex-20">下单转化率</span>
+                            </div>
+                            <div class="data-table-content layout-row" ng-repeat="item in visitOldNewDataList">
+                                <p class="flex-20 rank">{{item.type}}</p>
+                                <p class="flex-50 data-info">
+                                            <span class="data-index">
+                                                {{item.num}}
+                                            </span>
+                                    <span class="bar" style="width: {{item.typePer}}%;background:{{item.color}};"></span>
+                                </p>
+                                <p class="flex">{{item.typePer}}%</p>
+                                <p class="flex-20 value">{{item.createOrderPer}}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

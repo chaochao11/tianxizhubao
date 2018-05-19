@@ -1,0 +1,63 @@
+<ion-view title="订单列表">
+    <div class="tabs order-type-nav">
+        <a class="tab-item order-type-item" ui-sref="index.order-list({type:7})" nav-direction="forward" ui-sref-active="active" nav-transition="no">
+            全部
+        </a>
+        <a class="tab-item order-type-item" ui-sref="index.order-list({type:0})" nav-direction="forward" ui-sref-active="active" nav-transition="no">
+            待付款
+        </a>
+        <a class="tab-item order-type-item" ui-sref="index.order-list({type:1})" nav-direction="forward" ui-sref-active="active" nav-transition="no">
+            待发货
+        </a>
+        <a class="tab-item order-type-item" ui-sref="index.order-list({type:2})" nav-direction="forward" ui-sref-active="active" nav-transition="no">
+            待收货
+        </a>
+        <a class="tab-item order-type-item" ui-sref="index.order-list({type:3})" nav-direction="forward" ui-sref-active="active" nav-transition="no">
+            待评价
+        </a>
+        <a class="tab-item order-type-item" ui-sref="index.order-list({type:4})" nav-direction="forward" ui-sref-active="active" nav-transition="no">
+            已完成
+        </a>
+    </div>
+    <ion-content class="has-header main-content">
+        <ul class="order-list">
+            <li class="order-item" ng-repeat="item in orderList">
+                <a ui-sref="index.order-details({id:item.oid})" nav-direction="forward">
+                    <div class="order-status">
+                        <div class="order-num">订单编号：{{item.orderNumber}}</div>
+                        <div class="status" ng-switch="item.status">
+                            <span ng-switch-when="0">未付款</span>
+                            <span ng-switch-when="1">待发货</span>
+                            <span ng-switch-when="2">已发货</span>
+                            <span ng-switch-when="3">待评价</span>
+                            <span ng-switch-when="4">已完成</span>
+                            <span ng-switch-when="5">已取消</span>
+                        </div>
+                    </div>
+                    <div class="product-item" ng-repeat="productItem in item.products">
+                        <div class="product-img">
+                            <img ng-src="{{productItem.productPicture}}" class="img">
+                        </div>
+                        <div class="product-info">
+                            <p class="category-name">{{productItem.uses}}</p>
+                            <p class="product-name">{{productItem.name}}</p>
+                            <p class="product-argument">类型：{{productItem.attribute}}</p>
+                            <p class="product-price"><span class="price">{{productItem.price|currency:'¥'}}</span><span class="num">x{{productItem.num}}</span></p>
+                        </div>
+                    </div>
+                    <div class="order-total">
+                        共计{{item.numebr}}件商品，合计：{{item.total|currency:'¥'}}
+                    </div>
+                </a>
+            </li>
+            <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%"></ion-infinite-scroll>
+        </ul>
+        <div class="empty-status-container" ng-if="noData" get-window-height>
+            <div class="empty-status">
+                <i class="icon-empty order-empty"></i>
+                <p class="tips">暂时还没有订单哦！</p>
+            </div>
+        </div>
+    </ion-content>
+
+</ion-view>

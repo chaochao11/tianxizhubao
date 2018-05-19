@@ -1,0 +1,20 @@
+<div class="muilt-upload-container">
+
+    <ul class="uploaded-img-list">
+        <li ng-repeat="(key,value) in uploadedImageList track by $index">
+            <img ng-src="../{{value}}">
+            <a ng-click="deleteTempImage(value)" class="delete-img">x</a>
+        </li>
+    </ul>
+    <div class="btn-upload-img">
+        <div class="upload-loading" ng-if="uploadProgressLoading">
+            <span class="percent"> {{per+"%"}}</span>
+            <md-progress-circular value="{{per}}">
+
+            </md-progress-circular>
+        </div>
+        <input type="file" ng-disabled="isUploadValid" multiple accept=".jpg,.png">
+        <a href="javascript:;" class="btn-select-file"></a>
+    </div>
+
+</div>

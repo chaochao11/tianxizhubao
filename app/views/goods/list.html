@@ -1,0 +1,36 @@
+<ion-view class="main-content">
+    <ion-header-bar class="sort-nav">
+        <a ui-sref="index.goods-list({type:1,condition:condition,categoryID:categoryID,useID:useID,sort:''})" class="nav-item" ui-sref-active="active"
+           nav-transition="no">综合排序</a>
+        <a ui-sref="index.goods-list({type:1,condition:condition,categoryID:categoryID,useID:useID,sort:'desc-sale'})" nav-transition="no" class="nav-item"
+           ui-sref-active="active">销量优先</a>
+        <a href="javascript:;" class="nav-item price-sort" ng-class="{true:'active'}[isActive]" ng-click="showSubNav()">价格排序</a>
+        <nav class="sort-sub-nav" ng-class="isSubNavShow">
+            <a ui-sref="index.goods-list({type:1,condition:condition,categoryID:categoryID,useID:useID,sort:'desc-price'})" ui-sref-active="active" nav-transition="no" ng-click="hideSubNav()">
+                <span>价格由高到低</span><i class="selected"></i></a>
+            <a ui-sref="index.goods-list({type:1,condition:condition,categoryID:categoryID,useID:useID,sort:'asc-price'})" ui-sref-active="active" nav-transition="no" ng-click="hideSubNav()">
+                <span>价格由低到高</span><i class="selected"></i></a>
+        </nav>
+        <a ui-sref="index.goods-list({type:1,condition:condition,sort:'desc-time'})" ui-sref-active="active" class="nav-item"
+           nav-transition="no">新品推荐</a>
+    </ion-header-bar>
+    <ion-content>
+        <section class="product-list-container">
+            <ul class="product-list-wrapper">
+                <li class="product-item" ng-repeat="item in productList">
+                    <a ui-sref="index.goods-details({id:item.jid})" class="product-item-link" nav-transition="ios">
+                        <figure>
+                            <img ng-src="{{item.picture}}" class="product-img">
+                        </figure>
+                        <p class="category-name">{{item.uses}}</p>
+                        <p class="product-name">{{item.name}}</p>
+                        <p class="total-sale">销量：{{item.salesnum}}</p>
+                        <p class="product-price">{{item.price|currency:'¥'}}</p>
+                    </a>
+                </li>
+                <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="1%" ></ion-infinite-scroll>
+            </ul>
+        </section>
+    </ion-content>
+    <div class="overlay" ng-show="isSubNavShow==='open'" ng-click="hideSubNav()"></div>
+</ion-view>

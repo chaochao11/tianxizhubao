@@ -1,0 +1,130 @@
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <!--表格操作栏开始-->
+        <div class="table-action layout-row flex">
+            <div class="layout-row flex">
+                <md-button class="md-icon-button" ng-click="toggleSearchSideNav()">
+                    <md-tooltip>
+                        搜索
+                    </md-tooltip>
+                    <md-icon md-svg-icon="search"></md-icon>
+                </md-button>
+            </div>
+            <div class="layout-row">
+                <md-button class="md-icon-button" ng-click="redirectAdd()">
+                    <md-tooltip>
+                        新增活动
+                    </md-tooltip>
+                    <md-icon md-svg-icon="add"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <!--表格操作栏结束-->
+
+        <!--表格列表开始-->
+        <div class="full-page-table">
+            <div class="table-header layout-row flex" id="scroll_bar">
+                <div class="header-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="isSelected()"
+                                 ng-click="toggleAll()"
+                                 ng-hide="activityList.list.length==0"
+                    </md-checkbox>
+                </div>
+
+                <div class="header-item flex-30">
+                    <a ng-click="sortItem='name';desc=!desc">活动名称</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-8">
+                    <a ng-click="sortItem='activityTagName';desc=!desc">活动类型</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='activityTagName'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='activityTagName'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='startTime';desc=!desc">开始时间</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='startTime'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='startTime'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='endTime';desc=!desc">结束时间</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='endTime'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='endTime'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-8">
+                    <a ng-click="sortItem='totalsalesnum';desc=!desc">剩余天数</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalsalesnum'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalsalesnum'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-15">
+                    <a ng-click="sortItem='isOnline';desc=!desc">活动状态</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='isOnline'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='isOnline'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-30">操作</div>
+            </div>
+        </div>
+        <perfect-scrollbar class="table-scroll" tablescroll>
+            <!--空状态开始-->
+            <div class="no-data" ng-if="activityList.list.length==0">
+                <md-icon md-svg-icon="attention"></md-icon>
+                <span class="attention-note">暂无符合条件的数据</span>
+            </div>
+
+            <div class="table-item-row layout-row flex" ng-repeat="item in activityList.list | orderBy:sortItem:desc" ng-class="{'selected':exists(item, selected)}">
+                <div class="table-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="exists(item, selected)"
+                                 ng-click="toggle(item, selected)">
+                    </md-checkbox>
+                </div>
+                <div class="table-item flex-30">
+                    <div class="">{{item.name}}</div>
+                </div>
+                <div class="table-item flex-8">
+                    {{item.activityTagName}}
+                </div>
+                <div class="table-item flex-10">{{item.startTime}}</div>
+                <div class="table-item flex-10">{{item.endTime}}</div>
+                <div class="table-item flex-8">{{item.leavingsDay}}</div>
+                <div class="table-item flex-15" ng-switch="item.isOnline">
+                    <span ng-switch-when="1">上线中</span>
+                    <span ng-switch-when="0">已下线</span>
+                </div>
+                <div class="table-item flex-30">
+                    <a ui-sref="index.activity.update({id:{{item.id}}})">
+                        编辑
+                        <md-tooltip>编辑活动</md-tooltip>
+                    </a>
+                    <a ng-click="deleteActvity($event,item.id)">
+                        删除
+                        <md-tooltip>删除活动</md-tooltip>
+                    </a>
+                </div>
+            </div>
+        </perfect-scrollbar>
+
+        <page method="activityList"></page>
+
+    </div>
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-10dp layout-column" md-is-open="isSearchSideNavOpen"
+                md-component-id="searchSideNav">
+        <md-toolbar>
+            <span class="md-toolbar-tools search-header-title">搜索活动</span>
+        </md-toolbar>
+        <div class="search-panel-list">
+            <md-input-container class="md-block">
+                <label>活动名称</label>
+                <input type="text" ng-model="searchObj.name">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised md-primary" ng-click="searchActivity(searchObj)">搜索</md-button>
+            </md-input-container>
+        </div>
+    </md-sidenav>
+
+</div>

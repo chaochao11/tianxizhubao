@@ -1,0 +1,100 @@
+<md-dialog class="layout-column flex-50">
+    <md-toolbar class="md-raised md-primary">
+        <div class="md-toolbar-tools">
+            <h2>订单编号：{{orderObj.orderNumber}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancelDialog()">
+                <md-tooltip>
+                    关闭窗口
+                </md-tooltip>
+                <md-icon md-font-icon="md">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content>
+
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="订单基本信息">
+                    <md-content class="md-padding">
+                        <div class="layout-row details-row">
+                            <div class="md-block flex-25 details-col">
+                                <label>购买人</label>
+                                <p>{{orderObj.username}}</p>
+                            </div>
+                            <div class="md-block flex-25 details-col">
+                                <label>订单总金额</label>
+                                <p>{{orderObj.total|currency:'¥'}}</p>
+                            </div>
+                            <div class="md-block flex-25 details-col">
+                                <label>订单状态</label>
+                                <p ng-if="orderObj.status===0">未付款</p>
+                                <p ng-if="orderObj.status===1">待发货</p>
+                                <p ng-if="orderObj.status===2">待收货</p>
+                                <p ng-if="orderObj.status===3">待评价</p>
+                                <p ng-if="orderObj.status===5">已取消</p>
+                            </div>
+                            <div class="md-block flex-25 details-col">
+                                <label>订单时间</label>
+                                <p>{{orderObj.createTime}}</p>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="订单商品">
+                    <md-content class="md-padding">
+                        <div class="order-goods-list">
+                            <div class="goods-item" ng-repeat="item in orderObj.products">
+                                <div class="img">
+                                    <img ng-src="{{item.productPicture}}">
+                                </div>
+                                <div class="info">
+                                    <p>{{item.uses}}</p>
+                                    <p>{{item.name}}</p>
+                                    <p>{{item.attribute}}</p>
+                                </div>
+                                <div class="num">
+                                    <p>x{{item.num}}</p>
+                                    <p>{{item.price|currency:'¥'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="收货地址">
+                    <md-content class="md-padding">
+                        <div class="delivery-address">
+                            <p class="basic"><span class="name">收货人：{{orderObj.address.name}}</span><span class="phone">{{orderObj.address.phone}}</span> </p>
+                            <p class="address">收货地址：{{orderObj.address.addressInfo}}</p>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="发货" ng-if="orderObj.status===1">
+                    <md-content class="md-padding">
+                        <form name="operateTransportForm" novalidate>
+                            <div class="layout-row flex">
+                                <md-input-container class="flex-50">
+                                    <label>物流公司</label>
+                                    <md-select ng-model="transportCompany" name="transportCompany"  required>
+                                        <md-option ng-value="item.id" ng-repeat="item in transportCompanyList">{{item.name}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="flex-50">
+                                    <label>运单编号</label>
+                                    <input type="text" ng-model="transportNum" name="transportNum" required>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row flex">
+                                <md-input-container class="flex">
+                                    <md-button class="md-raised md-primary"
+                                               ng-disabled="operateTransportForm.$invalid"
+                                               ng-click="saveTransport($event,transportCompany,transportNum)">发货
+                                    </md-button>
+                                </md-input-container>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+
+    </md-content>
+</md-dialog>

@@ -1,0 +1,94 @@
+<ion-view>
+    <ion-content class="main-content">
+        <div class="status-bar unpay" ng-if="orderDetailsObj.status===0">
+            <div class="status">
+                <i class="icon icon-unpay"></i>
+                <span class="status-txt">等待买家付款</span>
+            </div>
+            <div class="count-down">剩余：{{countDown}}</div>
+        </div>
+        <div class="status-bar undeliver" ng-if="orderDetailsObj.status===1">
+            <div class="status">
+                <i class="icon icon-undeliver"></i>
+                <span class="status-txt">卖家待发货</span>
+            </div>
+            <div class="count-down">卖家承诺24小时内发货</div>
+        </div>
+        <div class="status-bar untake" ng-if="orderDetailsObj.status===2">
+            <div class="status">
+                <i class="icon icon-untake"></i>
+                <span class="status-txt">卖家已发货</span>
+            </div>
+            <div class="count-down">剩余7天3小时自动确认</div>
+        </div>
+        <div class="status-bar uncomment" ng-if="orderDetailsObj.status===3">
+            <div class="status">
+                <i class="icon icon-uncomment"></i>
+                <span class="status-txt">订单完成</span>
+            </div>
+        </div>
+        <div class="status-bar cancel" ng-if="orderDetailsObj.status===5">
+            <div class="status">
+                <i class="icon icon-cancel-order"></i>
+                <span class="status-txt">订单已取消</span>
+            </div>
+        </div>
+        <div class="take-address item-bar-container">
+            <div class="contact">
+                <p class="user">{{orderDetailsObj.address.name}}</p>
+                <p class="phone">{{orderDetailsObj.address.phone}}</p>
+            </div>
+            <div class="address">
+                {{orderDetailsObj.address.addressInfo}}
+            </div>
+        </div>
+        <ul class="order-product-list">
+            <li class="order-product-item" ng-repeat="item in orderDetailsObj.products">
+                <a ui-sref="index.product-details">
+                    <div class="product-item item-bar-container">
+                        <div class="product-img">
+                            <img ng-src="{{item.productPicture}}" class="img">
+                        </div>
+                        <div class="product-info">
+                            <p class="category-name">{{item.uses}}</p>
+                            <p class="product-name">{{item.name}}</p>
+                            <p class="product-argument">类型：{{item.attribute}}</p>
+                            <p class="product-price"><span class="price">{{item.price|currency:'¥'}}</span><span class="num">x{{item.num}}</span></p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="order-count item-bar-container">
+            <div class="count-item">
+                <p>运费</p>
+                <p class="count">{{orderDetailsObj.transportationexpenses|currency:'¥'}}</p>
+            </div>
+            <div class="count-item">
+                <p>满减优惠</p>
+                <p class="count">-{{orderDetailsObj.activitydeduction|currency:'¥'}}</p>
+            </div>
+            <div class="count-item">
+                <p>积分抵扣</p>
+                <p class="count">-{{orderDetailsObj.integraldeduction|currency:'¥'}}</p>
+            </div>
+        </div>
+        <div class="order-total item-bar-container">
+            <div class="count-item">
+                <p>订单总计</p>
+                <p class="total">{{orderDetailsObj.total|currency:'¥'}}</p>
+            </div>
+        </div>
+
+    </ion-content>
+    <ion-footer-bar class="order-operate-bar" ng-if="orderDetailsObj.status===0">
+        <button class="btn-cancel" ng-click="cancelOrder(orderDetailsObj.oid)">取消订单</button>
+        <button class="btn-normal" ng-click="payOrder(orderDetailsObj.oid)">去付款</button>
+    </ion-footer-bar>
+    <ion-footer-bar class="order-operate-bar" ng-if="orderDetailsObj.status===2">
+        <button class="btn-normal confirm" ng-click="confirmTake(orderDetailsObj.oid)">确认收货</button>
+    </ion-footer-bar>
+    <ion-footer-bar class="order-operate-bar" ng-if="orderDetailsObj.status===3">
+        <button class="btn-normal confirm" ui-sref="index.order-comment({id:orderDetailsObj.oid})">评价得积分</button>
+    </ion-footer-bar>
+</ion-view>

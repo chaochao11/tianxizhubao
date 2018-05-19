@@ -1,0 +1,40 @@
+<ion-view>
+    <ion-content class="main-content">
+        <header>
+            <div class="search-bar">
+                <form action="#" style="width: 100%" onsubmit="return false;">
+                    <input type="search" name="keyword" ng-model="keyword" placeholder="18K分色黄金钻石项链" bind-search>
+                </form>
+            </div>
+            <div class="swiper-container" banner-slide>
+                <ul class="swiper-wrapper">
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="../../build/images/banner_ad_main@2x.jpg">
+                        </a>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="../../build/images/banner_ad_main@2x.jpg">
+                        </a>
+                    </li>
+                </ul>
+                <div class="swiper-pagination"></div>
+            </div>
+        </header>
+        <section class="product-list-container">
+            <ul class="product-list-wrapper">
+                <li class="product-item" ng-repeat="item in mainProductList">
+                    <a ui-sref="index.main-details({id:item.jid})" class="product-item-link" nav-transition="ios">
+                        <figure>
+                            <img ng-src="{{item.picture}}" class="product-img">
+                        </figure>
+                        <p class="category-name">{{item.uses}}</p>
+                        <p class="product-name">{{item.name}}</p>
+                        <p class="product-price">{{item.price|currency:'￥'}}</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </ion-content>
+</ion-view>

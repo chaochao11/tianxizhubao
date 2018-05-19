@@ -1,0 +1,27 @@
+<ion-view>
+    <form name="bindPhoneForm" novalidate>
+        <ion-content class="main-content">
+            <div class="list">
+                <div class="item bind-item">
+                    <i class="icon-phone"></i>
+                    <input type="text" placeholder="请输入您的手机号" ng-model="data.phoneNum" name="phoneNum"
+                           pattern="^[1][3578][0-9]{9}$" required minlength="11" maxlength="11" id="phoneNum">
+                </div>
+                <div class="item bind-item">
+                    <i class="icon-verifly-code"></i>
+                    <input type="text" placeholder="请输入验证码" ng-model="data.smsCode" name="smsCode" pattern="^\d{6}$" required
+                           minlength="6" maxlength="6">
+                    <button class="button btn-normal"
+                            ng-disabled="bindPhoneForm.phoneNum.$invalid"
+                            ng-class="{true: 'enable'}[bindPhoneForm.phoneNum.$invalid]" count-down>获取短信验证码
+                    </button>
+                </div>
+            </div>
+        </ion-content>
+        <ion-footer-bar class="bottom-address-operate-bar">
+            <button class="button btn-normal-full" ng-disabled="bindPhoneForm.$invalid"
+                    ng-click="savePhone(data)">保存
+            </button>
+        </ion-footer-bar>
+    </form>
+</ion-view>

@@ -1,0 +1,238 @@
+<div class="data-info-wrapper">
+    <div class="card-container">
+        <div class="basic-survey card-item">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">实时概况</h4>
+            </div>
+            <div class="card-data-content layout-row">
+                <div class="part-left">
+                    <div class="value-survery layout-row">
+                        <i class="data-icon icon-pay"></i>
+                        <div class="data-value-container">
+                            <p class="data-value-title">实时收入</p>
+                            <p class="data-value">¥0</p>
+                        </div>
+                    </div>
+                    <div class="pay-chart">
+                        <div class="layout-column flex">
+                            <live-income-chart id="liveIncomeContainer" class="flex"></live-income-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="part-right ml-30">
+                    <div class="value-survery layout-column">
+                        <div class="layout-row">
+                            <i class="data-icon icon-visitor"></i>
+                            <div class="data-value-container">
+                                <p class="data-value-title">访客数</p>
+                                <p class="data-value">{{liveData.TodayUv}}</p>
+                            </div>
+                        </div>
+                        <div class="compare-value-wrapper">
+                            <p class="compare-value">
+                                <span class="compare-name">iOS设备</span>
+                                <span class="value">{{liveData.TodayIOSUv}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">Android设备</span>
+                                <span class="value">{{liveData.TodayAndroidUv}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">昨日全天</span>
+                                <span class="value">{{liveData.YesterdayUv}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="value-survery layout-column">
+                        <div class="layout-row">
+                            <i class="data-icon icon-buyer"></i>
+                            <div class="data-value-container">
+                                <p class="data-value-title">购买用户</p>
+                                <p class="data-value">{{liveData.YesterdayPayPerson}}</p>
+                            </div>
+                        </div>
+                        <div class="compare-value-wrapper">
+                            <p class="compare-value">
+                                <span class="compare-name">iOS设备</span>
+                                <span class="value">{{liveData.TodayPayPersonWithIphone}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">Android设备</span>
+                                <span class="value">{{liveData.TodayPayPersonWithAndroid}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">昨日全天</span>
+                                <span class="value">{{liveData.YesterdayPayPerson}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="value-survery layout-column">
+                        <div class="layout-row">
+                            <i class="data-icon icon-flux"></i>
+                            <div class="data-value-container">
+                                <p class="data-value-title">浏览量</p>
+                                <p class="data-value">{{liveData.TodayPv}}</p>
+                            </div>
+                        </div>
+                        <div class="compare-value-wrapper">
+                            <p class="compare-value">
+                                <span class="compare-name">iOS设备</span>
+                                <span class="value">{{liveData.TodayIOSPv}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">Android设备</span>
+                                <span class="value">{{liveData.TodayAndroidPv}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">昨日全天</span>
+                                <span class="value">{{liveData.YesterdayPv}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="value-survery layout-column">
+                        <div class="layout-row">
+                            <i class="data-icon icon-pay-order"></i>
+                            <div class="data-value-container">
+                                <p class="data-value-title">支付订单</p>
+                                <p class="data-value">{{liveData.TodayPayOrder}}</p>
+                            </div>
+                        </div>
+                        <div class="compare-value-wrapper">
+                            <p class="compare-value">
+                                <span class="compare-name">iOS设备</span>
+                                <span class="value">{{liveData.TodayPayOrderWithIphone}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">Android设备</span>
+                                <span class="value">{{liveData.TodayPayOrderWithAndroid}}</span>
+                            </p>
+                            <p class="compare-value">
+                                <span class="compare-name">昨日全天</span>
+                                <span class="value">{{liveData.YesterdayPayOrder}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="live-survery card-item">
+            <div class="card-data-header">
+                <h4>商品实时浏览排行</h4>
+            </div>
+            <div class="card-data-content">
+                <div class="data-table-header has-data-content layout-row">
+                    <span class="flex-10">排名</span>
+                    <span class="flex">商品名称</span>
+                    <span class="flex-20">浏览量</span>
+                </div>
+                <a class="data-table-content layout-row" ui-sref="#" ng-repeat="item in liveGoodsPvList">
+                    <p class="flex-10 rank">{{$index+1}}</p>
+                    <p class="flex data-info">
+                        <img ng-src="{{item.picture}}">
+                        <span class="data-name">{{item.name}}</span>
+                    </p>
+                    <p class="flex-20 value">{{item.visitedNum}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-container mt-15">
+        <div class="card-item flex">
+            <div class="card-data-header">
+                <h4>销售概况</h4>
+            </div>
+            <div class="card-data-content layout-row flex">
+                <div class="flex-50 layout-column">
+                    <h5 class="mb-20">订单统计</h5>
+                    <ul class="sales-data">
+                        <li>
+                            <h5 class="sales-name">本周订单</h5>
+                            <p class="sales-value">{{salesData.ThisWeekOrder}}</p>
+                        </li>
+                        <li>
+                            <h5 class="sales-name">本月订单</h5>
+                            <p class="sales-value">{{salesData.ThisMonthOrder}}</p>
+                        </li>
+                        <li>
+                            <h5 class="sales-name">上周订单</h5>
+                            <p class="sales-value">{{salesData.LastWeekOrder}}</p>
+                        </li>
+                        <li>
+                            <h5 class="sales-name">上月订单</h5>
+                            <p class="sales-value">{{salesData.LastMonthOrder}}</p>
+                        </li>
+                    </ul>
+                    <div class="sales-chart mt-15 layout-column">
+                        <seven-days-order-chart id="sevenDaysOrderDataContainer"></seven-days-order-chart>
+                    </div>
+                </div>
+                <div class="sales-data flex-50 ml-30 layout-column">
+                    <h5 class="mb-20">支付转化率</h5>
+                    <ul class="sales-data flex">
+                        <li>
+                            <h5 class="sales-name">本周平均</h5>
+                            <p class="sales-value">{{salesData.ThisWeekPayConversion}}</p>
+                        </li>
+                        <li>
+                            <h5 class="sales-name">本月平均</h5>
+                            <p class="sales-value">{{salesData.ThisMonthPayConversion}}</p>
+                        </li>
+                        <li>
+                            <h5 class="sales-name">上周平均</h5>
+                            <p class="sales-value">{{salesData.LastWeekPayConversion}}</p>
+                        </li>
+                        <li>
+                            <h5 class="sales-name">上月平均</h5>
+                            <p class="sales-value">{{salesData.LastMonthPayConversion}}</p>
+                        </li>
+                    </ul>
+                    <div class="sales-chart mt-15 layout-column">
+                        <seven-days-pay-transform-chart id="sevenDaysPayTransformDataContainer"></seven-days-pay-transform-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-column flex mt-15">
+        <div class="card-item flex">
+            <div class="card-data-header">
+                <h4>店铺流量</h4>
+            </div>
+            <div class="card-data-content layout-column flex">
+                <ten-days-flux-chart id="tenDaysFluxDataContainer"></ten-days-flux-chart>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-row flex mt-15">
+        <div class="card-item flex-60">
+            <div class="card-data-header">
+                <h4>收入走向</h4>
+            </div>
+            <div class="card-data-content layout-column flex">
+                <seven-days-income-chart id="sevenDaysIncomeDataContainer"></seven-days-income-chart>
+            </div>
+        </div>
+        <div class="card-item flex ml-15">
+            <div class="goods-sales-table">
+                <div class="card-data-header">
+                    <h4>商品销售排行</h4>
+                </div>
+                <div class="card-data-content">
+                    <div class="data-table-header has-data-content layout-row">
+                        <span class="flex-10">排名</span>
+                        <span class="flex">商品名称</span>
+                        <span class="flex-20">销售量</span>
+                    </div>
+                    <a class="data-table-content layout-row" ui-sref="#" ng-repeat="item in goodsSalesRankList">
+                        <p class="flex-10 rank">{{$index+1}}</p>
+                        <p class="flex data-info">
+                            <img ng-src="{{item.picture}}">
+                            <span class="data-name">{{item.name}}</span>
+                        </p>
+                        <p class="flex-20 value">{{item.salesNum}}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

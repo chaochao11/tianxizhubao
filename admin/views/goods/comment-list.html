@@ -1,0 +1,178 @@
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <!--表格操作栏开始-->
+        <div class="table-action layout-row flex">
+            <div class="layout-row flex">
+                <md-button class="md-icon-button" ng-disabled="selected.length<=0" ng-click="deleteChecked(selected,$event)">
+                    <md-tooltip>
+                        删除所选
+                    </md-tooltip>
+                    <md-icon md-svg-icon="delete"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="toggleSearchSideNav()">
+                    <md-tooltip>
+                        搜索
+                    </md-tooltip>
+                    <md-icon md-svg-icon="search"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <!--表格操作栏结束-->
+
+        <!--表格列表开始-->
+        <div class="full-page-table">
+            <div class="table-header layout-row flex" id="scroll_bar">
+                <div class="header-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="isSelected()"
+                                 ng-click="toggleAll()"
+                                 ng-hide="commentList.list.length==0"
+                    </md-checkbox>
+                </div>
+
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='personName';desc=!desc">评论人</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='personName'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='personName'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='attrs';desc=!desc">商品属性</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='attrs'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='attrs'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-8">
+                    <a ng-click="sortItem='stars';desc=!desc">评分</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stars'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stars'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-30">
+                    <a ng-click="sortItem='content';desc=!desc">评论内容</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='content'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='content'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='status';desc=!desc">是否审核</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='status'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='status'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-15">
+                    <a ng-click="sortItem='time';desc=!desc">评论时间</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='time'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='time'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex">操作</div>
+            </div>
+        </div>
+        <perfect-scrollbar class="table-scroll" tablescroll>
+            <!--空状态开始-->
+            <div class="no-data" ng-if="commentList.list.length==0">
+                <md-icon md-svg-icon="attention"></md-icon>
+                <span class="attention-note">暂无符合条件的数据</span>
+            </div>
+            <!--空状态结束-->
+            <!--表格列表开始-->
+            <div class="table-item-row layout-column flex" style="height:auto;" ng-repeat="item in commentList.list | orderBy:sortItem:desc" ng-class="{'selected':exists(item, selected)}">
+                <div class="layout-row flex" style="width: 100%;">
+                    <div class="table-item flex-5">
+                        <md-checkbox class="md-primary"
+                                     aria-label="多选框"
+                                     ng-checked="exists(item, selected)"
+                                     ng-click="toggle(item, selected)">
+                        </md-checkbox>
+                    </div>
+                    <div class="table-item flex-10">
+                        <div class="">{{item.personName}}</div>
+                    </div>
+                    <div class="table-item flex-10">
+                        <div class="">{{item.attrs}}</div>
+                    </div>
+                    <div class="table-item flex-8">
+                        {{item.stars}}
+                    </div>
+                    <div class="table-item flex-30">{{item.content}}</div>
+                    <div class="table-item flex-10" ng-switch="item.status">
+                        <span ng-switch-when="0">未审核</span>
+                        <span ng-switch-when="1">已审核</span>
+                    </div>
+                    <div class="table-item flex-15">{{item.time}}</div>
+                    <div class="table-item flex">
+                        <a href="javascript:;" show-comment-details>
+                            查看
+                            <md-tooltip>查看评论内容</md-tooltip>
+                        </a>
+                        <a ng-click="changeState($event,item.id)" ng-if="item.status===0">
+                            审核
+                            <md-tooltip>审核评论</md-tooltip>
+                        </a>
+                        <a ng-click="deleteComment($event,item.id)">
+                            删除
+                            <md-tooltip>删除评论</md-tooltip>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="layout-column comment-details" style="width: 100%;">
+                    <span>评价内容：</span>
+                    <p>{{item.content}}</p>
+                </div>
+            </div>
+        </perfect-scrollbar>
+        <!--表格列表结束-->
+        <!--表格分页栏开始-->
+        <page method="commentList"></page>
+        <!--表格分页栏结束-->
+    </div>
+    <!--搜索面板开始-->
+    <md-sidenav class="md-sidenav-left md-whiteframe-10dp layout-column" md-is-open="isSearchSideNavOpen"
+                md-component-id="searchSideNav">
+        <md-toolbar>
+            <span class="md-toolbar-tools search-header-title">搜索评论</span>
+        </md-toolbar>
+        <div class="search-panel-list">
+            <md-input-container class="md-block">
+                <label>评论人</label>
+                <input type="text" ng-model="searchObj.personName">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>评论内容</label>
+                <input  type="text" ng-model="searchObj.content">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>审核状态</label>
+                <md-select ng-model="searchObj.status">
+                    <md-option ng-value="0">
+                        未审核
+                    </md-option>
+                    <md-option ng-value="1">
+                        已审核
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>评价星级</label>
+                <md-select ng-model="searchObj.stars">
+                    <md-option ng-value="1">
+                        1星
+                    </md-option>
+                    <md-option ng-value="2">
+                        2星
+                    </md-option>
+                    <md-option ng-value="3">
+                        3星
+                    </md-option>
+                    <md-option ng-value="4">
+                        4星
+                    </md-option>
+                    <md-option ng-value="5">
+                        5星
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised md-primary" ng-click="searchComment(searchObj)">搜索</md-button>
+            </md-input-container>
+        </div>
+    </md-sidenav>
+    <!--搜索面板结束-->
+</div>

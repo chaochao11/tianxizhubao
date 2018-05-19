@@ -1,0 +1,60 @@
+<ion-view class="main-content">
+
+    <div class="ucenter-header-bar">
+        <div class="basic-info">
+            <div class="avatar-img">
+                <img ng-src="{{userInfoObj.avatar}}">
+            </div>
+            <span class="user-name">{{userInfoObj.nickName}}</span>
+        </div>
+        <p class="integral">
+            <span>积分：{{userInfoObj.integral}}</span>
+        </p>
+    </div>
+    <div class="list">
+        <a class="item item-icon-right" ui-sref="index.order-list({type:7})" nav-direction="forward">
+            <i class="icon ion-ios-arrow-forward"></i>
+            我的订单
+            <span class="item-note">查看全部订单</span>
+        </a>
+        <div class="item order-status-nav">
+            <a ui-sref="index.order-list({type:0})" class="order-status-item">
+                <i class="badge badge-positive" ng-if="orderInfoObj[0]!==0">{{orderInfoObj[0]}}</i>
+                <i class="icon-unpay"></i>
+                <p>待付款</p>
+            </a>
+            <a ui-sref="index.order-list({type:1})" class="order-status-item">
+                <i class="badge badge-positive" ng-if="orderInfoObj[1]!==0">{{orderInfoObj[1]}}</i>
+                <i class="icon-undeliver"></i>
+                <p>待发货</p>
+            </a>
+            <a ui-sref="index.order-list({type:2})" class="order-status-item">
+                <i class="badge badge-positive" ng-if="orderInfoObj[2]!==0">{{orderInfoObj[2]}}</i>
+                <i class="icon-untake"></i>
+                <p>待收货</p>
+            </a>
+            <a ui-sref="index.order-list({type:3})" class="order-status-item">
+                <i class="badge badge-positive" ng-if="orderInfoObj[3]!==0">{{orderInfoObj[3]}}</i>
+                <i class="icon-unevaluate"></i>
+                <p>待评价</p>
+            </a>
+        </div>
+        <a class="item item-icon-left item-icon-right intergral-nav-item" ui-sref="index.intergral">
+            <i class="icon icon-integral"></i>
+            我的积分
+            <i class="icon ion-ios-arrow-forward"></i>
+        </a>
+        <a class="item item-icon-left item-icon-right" ui-sref="index.bind-phone">
+            <i class="icon icon-phone"></i>
+            我的手机号
+            <i class="icon ion-ios-arrow-forward"></i>
+        </a>
+        <a class="item item-icon-left item-icon-right" ui-sref="index.address" nav-direction="forward">
+            <i class="icon icon-address"></i>
+            我的地址
+            <i class="icon ion-ios-arrow-forward"></i>
+        </a>
+
+    </div>
+
+</ion-view>

@@ -1,0 +1,28 @@
+<ion-view>
+    <product-sub-nav></product-sub-nav>
+    <ion-content class="main-content">
+        <header class="item-bar-container total-comment-header">
+            <p class="title">总体好评度</p>
+            <div class="total-comment">
+                <span class="point">
+                    5.0
+                </span>
+                <div class="start"><div rating-level rating-value="commentObj.stars" max="max" on-hover="onHover" on-leave="onLeave" readonly="{{readonly}}"></div></div>
+                <span class="good-level">100%好评</span>
+            </div>
+        </header>
+        <div class="comment-list">
+            <div class="item-bar-container" ng-repeat="item in commentList">
+                <div class="header">
+                    <span class="user-name">Lightman</span>
+                    <div class="star-level"><div rating-level rating-value="item.stars" max="max" on-hover="onHover" on-leave="onLeave" readonly="{{readonly}}"></div></div>
+                    <span class="time">{{item.time}}</span>
+                </div>
+                <div class="comment-content">
+                    {{item.content}}
+                </div>
+                <div class="buy-category">购买类型：“黑色珍珠，铂金戒圈，12#”</div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

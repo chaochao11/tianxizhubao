@@ -1,0 +1,100 @@
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <!--表格操作栏开始-->
+        <div class="table-action layout-row flex">
+            <div class="layout-row flex">
+                <md-button class="md-icon-button" ng-click="toggleSearchSideNav()">
+                    <md-tooltip>
+                        搜索
+                    </md-tooltip>
+                    <md-icon md-svg-icon="search"></md-icon>
+                </md-button>
+            </div>
+            <div class="layout-row">
+                <md-button class="md-icon-button" ng-click="redirectAdd()">
+                    <md-tooltip>
+                        新增积分规则
+                    </md-tooltip>
+                    <md-icon md-svg-icon="add"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <!--表格操作栏结束-->
+
+        <!--表格列表开始-->
+        <div class="full-page-table">
+            <div class="table-header layout-row flex" id="scroll_bar">
+                <div class="header-item flex">
+                    <a ng-click="sortItem='name';desc=!desc">积分规则名称</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='name'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='username';desc=!desc">奖励积分</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='stock';desc=!desc">奖励条件</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='stock';desc=!desc">状态</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='stock'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-30">操作</div>
+            </div>
+        </div>
+        <perfect-scrollbar class="table-scroll" tablescroll>
+            <!--空状态开始-->
+            <div class="no-data" ng-if="integralList.list.length==0">
+                <md-icon md-svg-icon="attention"></md-icon>
+                <span class="attention-note">暂无符合条件的数据</span>
+            </div>
+            <!--空状态结束-->
+            <!--表格列表开始-->
+            <div class="table-item-row layout-row flex" ng-repeat="item in integralList.list | orderBy:sortItem:desc" ng-class="{'selected':exists(item, selected)}">
+                <div class="table-item flex">{{item.name}}</div>
+                <div class="table-item flex-10">{{item.integral}}</div>
+                <div class="table-item flex-10">{{item.condition}}</div>
+                <div class="table-item flex-10" ng-switch="item.status">
+                    <span ng-switch-when="1">启用</span>
+                    <span ng-switch-when="0">禁用</span>
+                </div>
+                <div class="table-item flex-30">
+                    <a ui-sref="index.shop.integral-update({id:{{item.id}}})">
+                        编辑
+                        <md-tooltip>编辑积分规则</md-tooltip>
+                    </a>
+                    <a ng-click="deleteIntegral($event,item.id)">
+                        删除
+                        <md-tooltip>删除积分规则</md-tooltip>
+                    </a>
+                </div>
+            </div>
+        </perfect-scrollbar>
+        <!--表格列表结束-->
+        <!--表格分页栏开始-->
+        <page method="integralList"></page>
+        <!--表格分页栏结束-->
+    </div>
+    <!--搜索面板开始-->
+    <md-sidenav class="md-sidenav-left md-whiteframe-10dp layout-column" md-is-open="isSearchSideNavOpen"
+                md-component-id="searchSideNav">
+        <md-toolbar>
+            <span class="md-toolbar-tools search-header-title">搜索积分规则</span>
+        </md-toolbar>
+        <div class="search-panel-list">
+            <md-input-container class="md-block">
+                <label for="name">积分规则名称</label>
+                <input type="text" ng-model="searchObj.name" name="name">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised md-primary" ng-click="searchIntegral(searchObj)">搜索</md-button>
+            </md-input-container>
+        </div>
+    </md-sidenav>
+    <!--搜索面板结束-->
+</div>

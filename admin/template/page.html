@@ -1,0 +1,34 @@
+<div class="table-bottom layout-row">
+<div class="flex layout-row" ng-show="itemCount>0">
+    <md-select ng-model="totalNum" aria-label="每页显示数据" ng-change="pageChange(totalNum,search)" class="md-no-underline">
+        <md-option value='10'>每页显示10条数据</md-option>
+        <md-option value='20'>每页显示20条数据</md-option>
+        <md-option value='30'>每页显示30条数据</md-option>
+    </md-select>
+</div>
+<div class="layout-row page-list">
+    <button href="javascript:;" class="page-num"
+       ng-class="{true:'enable-page',false:''}[cpn==1]"
+       ng-click="jumpPage(1,pageSize,searchObj)"
+       ng-show="pageTotal>1"
+       ng-disabled="cpn==1" md-ink-ripple>首页</button>
+
+    <button href="javascript:;" ng-class="{true:'current-page',false:''}[cpn==page]"
+       ng-class="{true:'enable-page',false:''}[page=='...']"
+       ng-click="page=='...'?'':jumpPage(page,pageSize)"
+
+       class="page-num" ng-disabled="cpn==page||page=='...'" md-ink-ripple
+
+       ng-repeat="page in pages" >{{page}}</button>
+
+
+    <button href="javascript:;" class="page-num"
+       ng-class="{true:'enable-page',false:''}[cpn==pageTotal]"
+       ng-click="jumpPage(pageTotal,pageSize)"
+       ng-show="pageTotal>1"
+       ng-disabled="cpn==pageTotal" md-ink-ripple>末页</button>
+
+    <span class="item-total" ng-show="itemCount>0"
+          class="total"><b>{{pageTotal}}</b>页&nbsp;共<b>{{itemCount}}</b>条记录</span>
+</div>
+    </div>

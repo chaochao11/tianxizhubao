@@ -1,0 +1,63 @@
+<ion-view hide-nav-bar="cartList===undefined">
+    <ion-nav-bar class="bar-assertive">
+        <ion-nav-buttons side="left">
+            <button class="button button-clear">购物车</button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-clear" ng-click="showEditCart()">
+                {{showEdit===true?'完成':'编辑'}}
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="main-content" >
+        <ion-list class="cart-list" ng-if="cartList!==undefined">
+            <ion-item ng-repeat="item in cartList">
+                <ion-option-button class="button-assertive" ng-click="onItemDelete(item.cid,item)">
+                    删除
+                </ion-option-button>
+                <div class="cart-item" >
+                    <div class="item-select-status" ng-class="{true:'item-selected'}[item.checked]">
+                        <input type="checkbox" ng-model="item.checked" ng-click="selectOne()">
+                    </div>
+                    <div class="product-img">
+                        <img ng-src="{{item.img}}" class="img">
+                    </div>
+                    <div class="product-info" ng-if="showEdit===false">
+                        <p class="category-name">{{item.uses}}</p>
+                        <p class="product-name">{{item.name}}</p>
+                        <p class="product-argument">{{item.attrValues}}</p>
+                        <p class="product-price"><span class="priece">{{item.price|currency:'¥'}}</span><span class="num">x{{item.num}}</span></p>
+                    </div>
+                    <div class="cart-price-operate" ng-show="showEdit===true">
+                        <button ng-click="reduce(item.cid,item.num,$event)" class="button btn-reduce" ng-disabled="item.num===1||isDisabled"></button>
+                        <input type="text" ng-model="item.num" disabled>
+                        <button ng-click="plus(item.cid)" class="button btn-plus" ng-disabled="item.num===item.stock"></button>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+
+
+    </ion-content>
+    <div class="empty-status-container" ng-if="noData" get-window-height>
+        <div class="empty-status">
+            <i class="icon-empty cart-empty"></i>
+            <p class="tips">您的购物车还是空的哦！</p>
+        </div>
+    </div>
+        <ion-footer-bar class="bar bar-footer operate-bar" ng-hide="noData">
+            <div class="select-all">
+                <div class="item-select-status"  ng-class="{true:'item-selected',false:''}[selectAllStatus]">
+                    <input type="checkbox" ng-model="selectAllStatus" name="selectAll" ng-click="selectAll(selectAllStatus)">
+                </div>
+                <label for="selectAll">{{selectAllStatus?'取消':'全选'}}</label>
+            </div>
+            <div class="totalPirce" ng-if="showEdit===false">
+                <p class="total">总计：{{getTotalPrice()|currency:'¥'}}</p>
+                <!--<p class="coupon">已优惠：¥50.00</p>-->
+            </div>
+            <button class="button btn-account" ng-click="createOrder()" ng-disabled="getProductTotal()===0" ng-if="showEdit===false">去结算</button>
+            <button class="button btn-delete" ng-if="showEdit===true" ng-disabled="getProductTotal()===0" ng-click="checkDelete()">删除</button>
+        </ion-footer-bar>
+
+</ion-view>

@@ -1,0 +1,74 @@
+<div class="data-info-wrapper">
+    <div class="card-container">
+        <div class="card-item layout-column flex">
+            <div class="blance-info">
+                <div class="blance-item layout-row flex-25">
+                    <i class="data-icon icon-today-income"></i>
+                    <div class="flex">
+                        <p class="item-title">今日收入</p>
+                        <p><span class="unit">¥</span><span class="money">{{icomeObj.todayIncome|number:2}}</span></p>
+                    </div>
+                </div>
+                <div class="blance-item layout-row flex-25">
+                    <i class="data-icon icon-7days-income"></i>
+                   <div class="flex">
+                       <p class="item-title">7天收入</p>
+                       <p><span class="unit">¥</span><span class="money">{{icomeObj.sevenDayIncome|number:2}}</span><a ui-sref="#" class="details">收支明细</a></p>
+                   </div>
+
+                </div>
+                <div class="blance-item layout-row flex-25">
+                    <i class="data-icon icon-30days-income"></i>
+                    <div class="flex">
+                        <p class="item-title">30天收入</p>
+                        <p><span class="unit">¥</span><span class="money">{{icomeObj.totalIncome|number:2}}</span></p>
+                    </div>
+                </div>
+                <div class="blance-item layout-row flex-25">
+                    <i class="data-icon icon-total-income"></i>
+                    <div class="flex">
+                        <p class="item-title">总收入</p>
+                        <p><span class="unit">¥</span><span class="money">{{icomeObj.thirtyDayIncome|number:2}}</span><a ui-sref="#" class="md-button details">提现</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container layout-column flex mt-15">
+        <div class="card-item">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">收入数据统计</h4>
+                <div class="flex-25 layout-row operate">
+                    <md-select ng-model="incomeDateType" ng-change="incomeDateTypeChange(incomeDateType)">
+                        <md-option ng-value="0" selected>最近7日</md-option>
+                        <md-option ng-value="1">最近30日</md-option>
+                        <md-option ng-value="2">按月检索</md-option>
+                        <md-option ng-value="3">按年检索</md-option>
+                    </md-select>
+                    <md-select ng-model="incomeDataMonth" ng-change="incomeDataMonthChange(incomeDataMonth)" ng-if="incomeDateType===2">
+                        <md-option ng-value="0" selected>请选择月份</md-option>
+                        <md-option ng-repeat="item in incomeDataMonthList" ng-value="item">
+                            {{item}}
+                        </md-option>
+                    </md-select>
+                    <md-select ng-model="incomeDataYear" ng-change="incomeDataYearChange(incomeDataYear)" ng-if="incomeDateType===3">
+                        <md-option ng-value="0" selected>请选择年份</md-option>
+                        <md-option ng-repeat="item in yearList" ng-value="item">
+                            {{item}}年
+                        </md-option>
+                    </md-select>
+                    <md-button class="md-icon-button" ng-click="exportToExcel(selected,$event)">
+                        <md-tooltip>
+                            导出到Excel
+                        </md-tooltip>
+                        <md-icon md-svg-icon="exportExcel"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+            <div class="card-data-content layout-column flex">
+                <income-all-data-chart id="incomeAllDataContainer"></income-all-data-chart>
+            </div>
+        </div>
+    </div>
+</div>

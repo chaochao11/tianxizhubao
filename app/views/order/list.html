@@ -1,0 +1,18 @@
+<ion-view title="订单列表">
+    <!--<ion-tabs class="tabs-striped tabs-top">-->
+        <!--<ion-tab ng-repeat="item in tabs" on-select="selectedTab($index)" title="{{item.name}}"></ion-tab>-->
+    <!--</ion-tabs>-->
+    <div class="tabs order-type-nav">
+        <a class="tab-item order-type-item" ng-click="change(0)" ng-repeat="item in tabs">
+            {{item.name}}
+        </a>
+    </div>
+    <ion-content>
+        <div ng-repeat="item in orderList">
+            <div>{{item.total}}</div>
+        </div>
+        <ion-infinite-scroll ng-if="hasMore" on-infinite="loadMore()" distance="10%">
+        </ion-infinite-scroll>
+    </ion-content>
+
+</ion-view>

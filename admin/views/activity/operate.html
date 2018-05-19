@@ -1,0 +1,155 @@
+<div class="sub-page-content flex">
+    <div class="card layout-row md-whiteframe-1dp operate-form">
+        <div class="layout-row flex">
+            <form name="operateActivityForm" novalidate class="flex">
+                <md-tabs md-dynamic-height>
+                    <md-tab label="设置活动信息">
+                        <md-content class="md-padding">
+                            <div class="layout-row flex">
+                                <md-input-container class="md-block flex-33">
+                                    <label>活动名称</label>
+                                    <input type="text" name="name" ng-model="activityObj.name" minlength="2"
+                                           maxlength="60"
+                                           required placeholder="请输入活动名称">
+                                    <div ng-messages="operateActivityForm.name.$error">
+                                        <div ng-message="required">活动名称不能为空</div>
+                                        <div ng-message="minlength,maxlength">活动名称允许2-60个字符</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>活动类型</label>
+                                    <md-select ng-model="activityObj.activityTag" ng-change="changeTag()">
+                                        <md-option ng-value="item.id" ng-repeat="item in activityTypeList">
+                                            {{item.name}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="operateActivityForm.type.$error">
+                                        <div ng-message="pattern">请选择活动类型</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>是否上线</label>
+                                    <md-select ng-model="activityObj.isOnline">
+                                        <md-option selected ng-value="1">是</md-option>
+                                        <md-option ng-value="0">否</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row flex" ng-show="activityObj.activityTag!==undefined">
+                                <md-input-container class="md-block flex-33">
+                                    <label>活动开始时间</label>
+                                    <md-datepicker ng-model="activityObj.startTime" name="startTime" md-open-on-focus
+                                                   required ng-change="activityObj.endTime=''"></md-datepicker>
+                                    <div ng-messages="activityObj.startTime.$error">
+                                        <div ng-message="required">活动开始时间不能为空</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>活动结束时间</label>
+                                    <md-datepicker ng-model="activityObj.endTime" name="endTime" md-min-date="nextDate"
+                                                   md-open-on-focus required ng-focus="getStartDate()"
+                                                   ng-disabled="activityObj.startTime===undefined"></md-datepicker>
+                                    <div ng-messages="operateActivityForm.endTime.$error">
+                                        <div ng-message="pattern">活动结束时间不能为空</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row flex" ng-if="activityObj.activityTag===1">
+                                <md-input-container class="md-block flex-33">
+                                    <label>满多少</label>
+                                    <input type="text" name="condition" ng-model="activityObj.condition"
+                                           pattern="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$"
+                                           required placeholder="请输入满多少金额">
+                                    <div ng-messages="activityObj.condition.$error">
+                                        <div ng-message="required">请输入正确的金额</div>
+                                        <div ng-message="pattern">请输入正确的金额</div>
+                                    </div>
+                                </md-input-container>
+                                <md-input-container class="md-block flex-33">
+                                    <label>减多少</label>
+                                    <input type="text" name="content" ng-model="activityObj.content"
+                                           pattern="^(([1-9]\d{0,9})|0)(\.\d{1,2})?$"
+                                           required placeholder="请输入减多少金额">
+                                    <div ng-messages="operateActivityForm.content.$error">
+                                        <div ng-message="pattern">请输入正确的金额</div>
+                                        <div ng-message="pattern">请输入正确的金额</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row flex" ng-if="activityObj.activityTag===2">
+                                <md-input-container class="md-block flex-33">
+                                    <label>折扣</label>
+                                    <input type="text" name="content" ng-model="activityObj.content"
+                                           pattern="^\+?(?!0)\d*$"
+                                           required placeholder="请输入折扣数字，例如5">
+                                    <div ng-messages="operateActivityForm.content.$error">
+                                        <div ng-message="pattern">请输入正确的折扣</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="layout-row">
+                                <md-input-container>
+                                    <md-button class="md-raised md-primary"
+                                               ng-disabled="operateActivityForm.$invalid||selectedGoodsList.length===0"
+                                               ng-click="operateActivity($event,activityObj)">保存
+                                    </md-button>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="选择商品">
+                        <md-content class="md-padding">
+                            <md-autocomplete
+                                    ng-disabled="isSingleGoodsCoupon"
+                                    md-input-id="autoComplete"
+                                    md-no-cache="noCache"
+                                    md-selected-item="selectedItem"
+                                    md-search-text="searchText"
+                                    md-selected-item-change="selectedItemChange(item)"
+                                    md-items="item in getGoodsList(searchText)"
+                                    md-item-text="item.name"
+                                    md-min-length="0"
+                                    placeholder="请输入商品关键字进行添加">
+                                <md-item-template>
+                                    <div class="goods-suggestion">
+                                        <div class="item">
+                                            <div class="img">
+                                                <img ng-src="{{item.picture}}" style="width: 50px;height:50px;">
+                                            </div>
+                                            <div class="info">
+                                                <span class="goods-name">{{item.name}}</span>
+                                                <span class="goods-stock">库存：{{item.stock}}</span>
+                                                <span class="goods-price">价格：¥{{item.priceRange}}</span>
+                                                <span>销量：{{item.totalsalesnum}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                                <md-not-found>
+                                    关键字 "{{searchText}}" 没有找到相应的商品
+                                </md-not-found>
+                            </md-autocomplete>
+
+                            <ul class="md-padding activity-goods-list">
+                                <li ng-repeat="item in selectedGoodsList" class="item">
+                                    <div class="img">
+                                        <img ng-src="{{item.picture}}">
+                                    </div>
+                                    <div class="info">
+                                        <span class="goods-name">{{item.name}}</span>
+                                        <span class="goods-stock">库存：{{item.stock}}</span>
+                                        <span class="goods-price">价格：¥{{item.priceRange}}</span>
+                                        <span>销量：{{item.totalsalesnum}}</span>
+                                    </div>
+                                    <div class="operate">
+                                        <md-button class="md-primary" ng-click="removeGoods($index)">删除</md-button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+<div class="sub-page-content">
+    <div class="md-whiteframe-1dp">
+        <!--表格操作栏开始-->
+        <div class="table-action layout-row flex">
+            <div class="layout-row flex">
+                <md-button class="md-icon-button" ng-click="toggleSearchSideNav()">
+                    <md-tooltip>
+                        搜索
+                    </md-tooltip>
+                    <md-icon md-svg-icon="search"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <!--表格操作栏结束-->
+
+        <!--表格列表开始-->
+        <div class="full-page-table">
+            <div class="table-header layout-row flex" id="scroll_bar">
+                <div class="header-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="isSelected()"
+                                 ng-click="toggleAll()"
+                                 ng-hide="userList.list.length==0"
+                    </md-checkbox>
+                </div>
+
+                <div class="header-item flex-30">
+                    <a ng-click="sortItem='userName';desc=!desc">用户昵称</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='userName'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='userName'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='username';desc=!desc">联系电话</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='username'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='sex';desc=!desc">性别</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='sex'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='sex'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='userPoint';desc=!desc">用户积分</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='userPoint'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='userPoint'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='orderCount';desc=!desc">下单量</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='orderCount'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='orderCount'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex-10">
+                    <a ng-click="sortItem='totalConsumption';desc=!desc">总下单金额</a>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalConsumption'&&!desc">arrow_drop_down</md-icon>
+                    <md-icon md-font-set="md" ng-if="sortItem=='totalConsumption'&&desc">arrow_drop_up</md-icon>
+                </div>
+                <div class="header-item flex">操作</div>
+            </div>
+        </div>
+        <perfect-scrollbar class="table-scroll" tablescroll>
+            <!--空状态开始-->
+            <div class="no-data" ng-if="userList.list.length==0">
+                <md-icon md-svg-icon="attention"></md-icon>
+                <span class="attention-note">暂无符合条件的数据</span>
+            </div>
+            <!--空状态结束-->
+            <!--表格列表开始-->
+            <div class="table-item-row layout-row flex goods" ng-repeat="item in userList.list | orderBy:sortItem:desc" ng-class="{'selected':exists(item, selected)}">
+                <div class="table-item flex-5">
+                    <md-checkbox class="md-primary"
+                                 aria-label="多选框"
+                                 ng-checked="exists(item, selected)"
+                                 ng-click="toggle(item, selected)">
+                    </md-checkbox>
+                </div>
+                <div class="table-item flex-30 layout-row">
+                    <img ng-src="{{item.headAppear}}">
+                    <div class="">{{item.userName}}</div>
+                </div>
+                <div class="table-item flex-10">{{item.phone}}</div>
+                <div class="table-item flex-10" ng-switch="{{item.sex}}">
+                    <span ng-switch-when="0">未知</span>
+                    <span ng-switch-when="1">男</span>
+                    <span ng-switch-when="2">女</span>
+                </div>
+                <div class="table-item flex-10">{{item.userPoint}}</div>
+                <div class="table-item flex-10">{{item.orderCount}}</div>
+                <div class="table-item flex-10">{{item.totalConsumption|currency:'¥'}}</div>
+                <div class="table-item flex">
+                    <a ng-click="userDetails($event,item.id)">
+                        详情
+                        <md-tooltip>查看用户详情</md-tooltip>
+                    </a>
+                </div>
+            </div>
+        </perfect-scrollbar>
+        <!--表格列表结束-->
+        <!--表格分页栏开始-->
+        <page method="userList"></page>
+        <!--表格分页栏结束-->
+    </div>
+    <!--搜索面板开始-->
+    <md-sidenav class="md-sidenav-left md-whiteframe-10dp layout-column" md-is-open="isSearchSideNavOpen"
+                md-component-id="searchSideNav">
+        <md-toolbar>
+            <span class="md-toolbar-tools search-header-title">搜索用户</span>
+        </md-toolbar>
+        <div class="search-panel-list">
+            <md-input-container class="md-block">
+                <label>用户昵称</label>
+                <input type="text" ng-model="searchObj.name">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised md-primary" ng-click="searchUser(searchObj)">搜索</md-button>
+            </md-input-container>
+        </div>
+    </md-sidenav>
+    <!--搜索面板结束-->
+</div>

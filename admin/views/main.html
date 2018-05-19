@@ -1,0 +1,164 @@
+<div class="data-info-wrapper">
+    <div class="card-container">
+        <div class="card-item layout-column flex">
+            <div class="blance-info">
+                <a class="blance-item layout-row flex-20" ui-sref="index.order.untransport-list({pageNo:1,pageSize:10,type:1})">
+                    <i class="data-icon icon-wait-deliver"></i>
+                    <div class="flex">
+                        <p class="item-title">待发货订单</p>
+                        <p><span class="money">{{dataBasicObj.WaitForSend}}</span></p>
+                    </div>
+                </a>
+                <a class="blance-item layout-row flex-20">
+                    <i class="data-icon icon-refund-order"></i>
+                    <div class="flex">
+                        <p class="item-title">退款订单</p>
+                        <p><span class="money">{{dataBasicObj.Refund}}</span></p>
+                    </div>
+
+                </a>
+                <a class="blance-item layout-row flex-20">
+                    <i class="data-icon icon-yesterday-order"></i>
+                    <div class="flex">
+                        <p class="item-title">昨日订单</p>
+                        <p><span class="money">{{dataBasicObj.YesterDayOrder}}</span></p>
+                    </div>
+                </a>
+                <div class="blance-item layout-row flex-20">
+                    <i class="data-icon icon-yesterday-sum"></i>
+                    <div class="flex">
+                        <p class="item-title">昨日交易额</p>
+                        <p><span class="unit">¥</span><span class="money">{{dataBasicObj.YesterDayTrade|number:2}}</span></p>
+                    </div>
+                </div>
+                <div class="blance-item layout-row flex-20">
+                    <i class="data-icon icon-total-sum"></i>
+                    <div class="flex">
+                        <p class="item-title">总交易额</p>
+                        <p><span class="unit">¥</span><span class="money">{{dataBasicObj.TotalTrade|number:2}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-column mt-15">
+        <div class="card-item flex">
+            <div class="card-data-header layout-row flex">
+                <h4 class="flex">会员数据</h4>
+            </div>
+            <div class="card-data-content layout-column">
+                <ul class="flex layout-row member-data-overview">
+                    <li class="flex-20">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex">
+                                <p class="name">会员总数</p>
+                                <h5 class="value">{{memberDataObj.sumUser}}</h5>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="flex-20">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex">
+                                <p class="name">今日新增会员</p>
+                                <div class="layout-row flex">
+                                    <h5 class="value flex-30">{{memberDataObj.countUser.countTodayUser}}</h5>
+                                    <div class="flex compare fr">
+                                        <span class="name">较昨日：</span>
+                                        <span class="compare-value" ng-class="{'up':memberDataObj.countUser.change>0,'down':memberDataObj.countUser.change<0}">
+                                            {{memberDataObj.countUser.change===0?'-':memberDataObj.countUser.change}}
+                                        </span>
+                                        <i class="icon" ng-class="{'icon-arrow-up':memberDataObj.countUser.riseOrFall>0,'icon-arrow-down':memberDataObj.countUser.riseOrFall<0}"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="flex-20">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex">
+                                <p class="name">今日访客数</p>
+                                <div class="layout-row flex">
+                                    <h5 class="value flex-30">{{memberDataObj.uv.todayUv}}</h5>
+                                    <div class="flex compare fr">
+                                        <span class="name">较昨日：</span>
+                                        <span class="compare-value" ng-class="{'up':memberDataObj.uv.riseOrFall>0,'down':memberDataObj.uv.riseOrFall<0}">
+                                            {{memberDataObj.uv.change===0?'-':memberDataObj.uv.change}}
+                                        </span>
+                                        <i class="icon" ng-class="{'icon-arrow-up':memberDataObj.uv.riseOrFall>0,'icon-arrow-down':memberDataObj.uv.riseOrFall<0}"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="flex-20">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex">
+                                <p class="name">今日购买数</p>
+                                <div class="layout-row flex">
+                                    <h5 class="value flex-30">{{memberDataObj.countBuy.todayOrder}}</h5>
+                                    <div class="flex compare fr">
+                                        <span class="name">较昨日：</span>
+                                        <span class="compare-value" ng-class="{'up':memberDataObj.countBuy.riseOrFall>0,'down':memberDataObj.countBuy.riseOrFall<0}">
+                                            {{memberDataObj.countBuy.change===0?'-':memberDataObj.countBuy.change}}
+                                        </span>
+                                        <i class="icon" ng-class="{'icon-arrow-up':memberDataObj.countBuy.riseOrFall>0,'icon-arrow-down':memberDataObj.countBuy.riseOrFall<0}"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="flex-20">
+                        <div class="flux-overview-data layout-row flex">
+                            <div class="flex-70">
+                                <p class="name">已购买用户占比</p>
+                                <h5 class="value">{{memberDataObj.buyPercent}}</h5>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-column mt-15">
+        <div class="card-item">
+            <div class="card-data-header">
+                <h4>常用功能</h4>
+            </div>
+            <div class="card-data-content">
+                <nav class="shortcut">
+                    <a ui-sref="index.goods.add" class="shortcut-item">
+                        <i class="icon icon-shortcut-add-goods"></i>
+                        <p>发布商品</p>
+                    </a>
+                    <a ui-sref="index.activity.add" class="shortcut-item">
+                        <i class="icon icon-shortcut-add-activity"></i>
+                        <p>发布活动</p>
+                    </a>
+                    <a ui-sref="index.order.untransport-list({pageNo:1,pageSize:10,type:1})" class="shortcut-item">
+                        <i class="icon icon-shortcut-order-transport"></i>
+                        <p>订单发货</p>
+                    </a>
+                    <a ui-sref="#" class="shortcut-item">
+                        <i class="icon icon-shortcut-refund"></i>
+                        <p>退款操作</p>
+                    </a>
+                    <a ui-sref="index.shop.main" class="shortcut-item">
+                        <i class="icon icon-shortcut-setting"></i>
+                        <p>店铺设置</p>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="card-container layout-column flex mt-15">
+        <div class="card-item">
+            <div class="card-data-header layout-row">
+                <h4 class="flex">订单分布概况</h4>
+            </div>
+            <div class="card-data-content layout-column flex">
+                <order-distribution-chart id="orderDistributionContainer"></order-distribution-chart>
+            </div>
+        </div>
+    </div>
+</div>

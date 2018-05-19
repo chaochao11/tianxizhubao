@@ -1,0 +1,37 @@
+<ion-content class="main-content">
+    <div class="list category-list">
+        <a class="item item-icon-right" ui-sref="index.goods-list({type:1,condition:'',sort:''})">
+            <i class="icon ion-ios-arrow-forward"></i>
+            全部分类
+            <p class="sub-title">全部珍珠分类</p>
+        </a>
+       <div class="accordion-container" accordion-category>
+           <a class="item item-icon-right" href="javascript:;">
+               <i class="icon ion-ios-arrow-forward"></i>
+               珍珠品种分类
+               <p class="sub-title">大溪地/南洋/淡水</p>
+           </a>
+           <div class="accordion-wrapper">
+               <div class="accordion-list">
+                   <a ng-click="searchGoodsByCategory(item.pearlId)" class="accordion-item" ng-repeat="item in goodsCategory">
+                       {{item.pearlName}}
+                   </a>
+               </div>
+           </div>
+       </div>
+        <div class="accordion-container" accordion-category>
+            <a class="item item-icon-right" href="javascript:;">
+                <i class="icon ion-ios-arrow-forward"></i>
+                珠宝用途分类
+                <p class="sub-title">项链/吊坠/戒指/耳钉</p>
+            </a>
+            <div class="accordion-wrapper">
+                <div class="accordion-list">
+                    <a ng-click="searchGoodsByUse(item.useId)" class="accordion-item" ng-repeat="item in goodsUses">
+                        {{item.useName}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

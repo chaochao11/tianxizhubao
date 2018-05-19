@@ -1,0 +1,85 @@
+<!--<div class="sub-page-content flex">-->
+    <!--<div class="card layout-row md-whiteframe-1dp operate-form">-->
+        <!--<div class="layout-row flex">-->
+            <!--<form name="operateGoodsForm" novalidate class="flex">-->
+                <!--<md-tabs md-dynamic-height>-->
+                    <!--<md-tab label="SKU">-->
+                        <!--<md-content class="md-padding">-->
+                            <!--<div class="custom-input-container" ng-repeat="item in attrList">-->
+                                <!--<label class="title">{{item.name}}</label>-->
+                                <!--<div class="item{{$index}}">-->
+                                    <!--<md-checkbox ng-repeat="subItem in item.itemAttributes" class="chk"-->
+                                                 <!--aria-label="{{subItem.value}}"-->
+                                                 <!--ng-value="{{subItem.id}}"-->
+                                                 <!--ng-checked="subItem.checked"-->
+                                                 <!--ng-click="toggle(this)">-->
+                                        <!--{{subItem.value}}-->
+                                    <!--</md-checkbox>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="custom-input-container" ng-if="skuTempTable.length!==0">-->
+                                <!--<label>SKU列表</label>-->
+                                <!--<div class="full-page-table sku-table">-->
+                                    <!--<div class="table-header layout-row flex">-->
+
+                                        <!--<div class="header-item flex-10">-->
+                                            <!--颜色-->
+                                        <!--</div>-->
+                                        <!--<div class="header-item flex-10">-->
+                                            <!--材质-->
+                                        <!--</div>-->
+                                        <!--<div class="header-item flex-10">-->
+                                            <!--大小-->
+                                        <!--</div>-->
+                                        <!--<div class="header-item flex-10">-->
+                                            <!--价格-->
+                                        <!--</div>-->
+                                        <!--<div class="header-item flex-10">-->
+                                            <!--库存-->
+                                        <!--</div>-->
+                                        <!--<div class="header-item flex">操作</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="table-item-row layout-row flex" ng-repeat="item in skuTempTable" data-sku="{{item}};{{price}};{{stock}}">-->
+                                    <!--<div class="table-item flex-10 layout-row">-->
+                                        <!--{{item.color}}-->
+                                    <!--</div>-->
+                                    <!--<div class="table-item flex-10 layout-row">-->
+                                        <!--{{item.material}}-->
+                                    <!--</div>-->
+                                    <!--<div class="table-item flex-10 layout-row">-->
+                                        <!--{{item.size}}-->
+                                    <!--</div>-->
+                                    <!--<div class="table-item flex-10 layout-row">-->
+                                       <!--<input type="text" class="sku-table-input" ng-model="item.price">-->
+                                    <!--</div>-->
+                                    <!--<div class="table-item flex-10 layout-row">-->
+                                        <!--<input type="text" class="sku-table-input" ng-model="item.stock">-->
+                                    <!--</div>-->
+                                    <!--<div class="table-item flex">-->
+                                        <!--<a href="javascript:;" class="upload-sku-img" upload-sku-img>-->
+                                            <!--<input type="file" data-index="{{$index}}">-->
+                                        <!--</a>-->
+                                        <!--<img class="sku-img" style='width: 25px;height:25px;vertical-align: middle'>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div id="skuTable"></div>-->
+                                <!--<div id="createTable"></div>-->
+                            <!--</div>-->
+                        <!--</md-content>-->
+                    <!--</md-tab>-->
+                <!--</md-tabs>-->
+                <!--<div class="layout-row">-->
+                    <!--<md-input-container>-->
+                        <!--<md-button class="md-raised md-primary"-->
+                                   <!--ng-disabled="operateGoodsForm.$invalid"-->
+                                   <!--ng-click="saveGoods($event)">立即保存-->
+                        <!--</md-button>-->
+                    <!--</md-input-container>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<test-chart id="testContainer{{$index}}" ng-repeat="item in json" style="float: left"></test-chart>
